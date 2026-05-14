@@ -12,7 +12,7 @@ public class QuantityMeasurementApp {
         }
 
         /**
-         * Override equals() method to compare Feet objects
+         * Override equals() method to compare Feet objectss
          */
         @Override
         public boolean equals(Object obj) {
