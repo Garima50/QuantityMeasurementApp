@@ -32,6 +32,32 @@ public class QuantityMeasurementAppTest {
         assertTrue(length1.equals(length2));
     }
 
+    // UC4 UPDATE
+    @Test
+    public void testYardsEquality() {
+
+        Length yard1 =
+                new Length(1.0, Length.LengthUnit.YARDS);
+
+        Length yard2 =
+                new Length(1.0, Length.LengthUnit.YARDS);
+
+        assertTrue(yard1.equals(yard2));
+    }
+
+    // UC4 UPDATE
+    @Test
+    public void testCentimetersEquality() {
+
+        Length cm1 =
+                new Length(1.0, Length.LengthUnit.CENTIMETERS);
+
+        Length cm2 =
+                new Length(1.0, Length.LengthUnit.CENTIMETERS);
+
+        assertTrue(cm1.equals(cm2));
+    }
+
     // ---------------- CROSS UNIT TESTS ----------------
 
     @Test
@@ -46,42 +72,43 @@ public class QuantityMeasurementAppTest {
         assertTrue(feet.equals(inches));
     }
 
+    // UC4 UPDATE
     @Test
-    public void testInchesFeetComparison() {
+    public void testYardFeetComparison() {
 
-        Length inches =
-                new Length(12.0, Length.LengthUnit.INCHES);
+        Length yard =
+                new Length(1.0, Length.LengthUnit.YARDS);
 
         Length feet =
-                new Length(1.0, Length.LengthUnit.FEET);
+                new Length(3.0, Length.LengthUnit.FEET);
 
-        assertTrue(inches.equals(feet));
+        assertTrue(yard.equals(feet));
     }
 
-    // ---------------- NEGATIVE TESTS ----------------
-
+    // UC4 UPDATE
     @Test
-    public void testFeetInequality() {
+    public void testYardInchesComparison() {
 
-        Length length1 =
-                new Length(1.0, Length.LengthUnit.FEET);
+        Length yard =
+                new Length(1.0, Length.LengthUnit.YARDS);
 
-        Length length2 =
-                new Length(2.0, Length.LengthUnit.FEET);
+        Length inches =
+                new Length(36.0, Length.LengthUnit.INCHES);
 
-        assertFalse(length1.equals(length2));
+        assertTrue(yard.equals(inches));
     }
 
+    // UC4 UPDATE
     @Test
-    public void testInchesInequality() {
+    public void testCentimeterInchesComparison() {
 
-        Length length1 =
-                new Length(1.0, Length.LengthUnit.INCHES);
+        Length cm =
+                new Length(1.0, Length.LengthUnit.CENTIMETERS);
 
-        Length length2 =
-                new Length(2.0, Length.LengthUnit.INCHES);
+        Length inches =
+                new Length(0.393701, Length.LengthUnit.INCHES);
 
-        assertFalse(length1.equals(length2));
+        assertTrue(cm.equals(inches));
     }
 
     // ---------------- NULL TESTS ----------------
@@ -123,8 +150,7 @@ public class QuantityMeasurementAppTest {
         Length length =
                 new Length(1.0, Length.LengthUnit.FEET);
 
-        String obj = "1.0";
-
+        Object obj = "1.0";
         assertFalse(length.equals(obj));
     }
 }
