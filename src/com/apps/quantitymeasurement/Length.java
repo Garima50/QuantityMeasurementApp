@@ -120,10 +120,8 @@ public class Length {
         );
     }
 
-    // ==================================================
     // UC5 UPDATE
     // Conversion Feature
-    // ==================================================
 
     public Length convertTo(
             LengthUnit targetUnit
@@ -154,10 +152,8 @@ public class Length {
         );
     }
 
-    // ==================================================
     // UC5 UPDATE
     // Human readable output
-    // ==================================================
 
     @Override
     public String toString() {
@@ -169,10 +165,8 @@ public class Length {
         );
     }
 
-    // ==================================================
     // UC5 UPDATE
     // Standalone testing
-    // ==================================================
 
     public static void main(
             String[] args

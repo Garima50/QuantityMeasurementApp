@@ -6,9 +6,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class QuantityMeasurementAppTest {
 
-    // ==================================================
     // SAME UNIT TESTS
-    // ==================================================
 
     @Test
     public void testFeetEquality() {
@@ -50,9 +48,7 @@ public class QuantityMeasurementAppTest {
         );
     }
 
-    // ==================================================
     // CROSS UNIT TESTS
-    // ==================================================
 
     @Test
     public void testFeetInchesComparison() {
@@ -154,10 +150,8 @@ public class QuantityMeasurementAppTest {
         );
     }
 
-    // ==================================================
     // UC5 UPDATE
     // YARDS AND CENTIMETERS
-    // ==================================================
 
     @Test
     public void yardEquals36Inches() {
@@ -259,9 +253,7 @@ public class QuantityMeasurementAppTest {
         );
     }
 
-    // ==================================================
     // OBJECT CONTRACT TESTS
-    // ==================================================
 
     @Test
     public void referenceEqualitySameObject() {
@@ -353,9 +345,7 @@ public class QuantityMeasurementAppTest {
     );
 }
 
-    // ==================================================
     // APP METHOD TESTS
-    // ==================================================
 
     @Test
     public void crossUnitEqualityDemonstrateMethod() {
@@ -371,9 +361,7 @@ public class QuantityMeasurementAppTest {
         );
     }
 
-    // ==================================================
     // UC5 CONVERSION TESTS
-    // ==================================================
 
     @Test
     public void convertFeetToInches() {

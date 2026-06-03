@@ -2,10 +2,7 @@ package com.apps.quantitymeasurement;
 
 public class QuantityMeasurementApp {
 
-    // ==================================================
     // Existing Equality Method
-    // ==================================================
-
     public static boolean demonstrateLengthEquality(
             Length length1,
             Length length2
@@ -14,11 +11,8 @@ public class QuantityMeasurementApp {
         return length1.equals(length2);
     }
 
-    // ==================================================
     // UC5 UPDATE
     // Demonstrate comparison
-    // ==================================================
-
     public static boolean demonstrateLengthComparison(
             double value1,
             Length.LengthUnit unit1,
@@ -60,10 +54,8 @@ public class QuantityMeasurementApp {
         return result;
     }
 
-    // ==================================================
     // UC5 UPDATE
     // Conversion Method
-    // ==================================================
 
     public static Length demonstrateLengthConversion(
             double value,
@@ -82,10 +74,8 @@ public class QuantityMeasurementApp {
         );
     }
 
-    // ==================================================
     // UC5 UPDATE
     // Overloaded Conversion Method
-    // ==================================================
 
     public static Length demonstrateLengthConversion(
             Length length,
@@ -97,10 +87,8 @@ public class QuantityMeasurementApp {
         );
     }
 
-    // ==================================================
     // UC5 UPDATE
     // Main Method
-    // ==================================================
 
     public static void main(
             String[] args
