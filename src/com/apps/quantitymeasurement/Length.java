@@ -4,7 +4,6 @@ public class Length {
 
     // Instance variables
 
-    // UC5 UPDATE
     // Value object semantics
     private double value;
     private LengthUnit unit;
@@ -14,7 +13,6 @@ public class Length {
         FEET(12.0),
         INCHES(1.0),
 
-        // UC5 UPDATE
         YARDS(36.0),
         CENTIMETERS(0.393701);
 
@@ -42,7 +40,6 @@ public class Length {
             );
         }
 
-        // UC5 UPDATE
         // Validate numeric value
 
         if (!Double.isFinite(value)) {
@@ -55,7 +52,7 @@ public class Length {
         this.unit = unit;
     }
 
-    // UC5 UPDATE
+
     // Utility method
     // Convert to base unit (inches)
 
@@ -70,7 +67,7 @@ public class Length {
         ) / 100.0;
     }
 
-    // UC5 UPDATE
+
     // Private helper method
 
     private boolean compare(
@@ -120,10 +117,7 @@ public class Length {
         );
     }
 
-    // ==================================================
-    // UC5 UPDATE
     // Conversion Feature
-    // ==================================================
 
     public Length convertTo(
             LengthUnit targetUnit
@@ -140,13 +134,10 @@ public class Length {
                 convertToBaseUnit();
 
         double convertedValue =
-                baseValue /
-                targetUnit.getConversionFactor();
-
-        convertedValue =
-                Math.round(
-                        convertedValue * 100.0
-                ) / 100.0;
+                convertFromBaseToTargetUnit(
+                        baseValue,
+                        targetUnit
+                );
 
         return new Length(
                 convertedValue,
@@ -154,10 +145,76 @@ public class Length {
         );
     }
 
+
     // ==================================================
-    // UC5 UPDATE
+    // UC6 UPDATE
+    // Addition of two length measurements
+    // Result returned in unit of first operand
+    // ==================================================
+
+    public Length add(
+            Length thatLength
+    ) {
+
+        if (thatLength == null) {
+
+            throw new IllegalArgumentException(
+                    "Length to add cannot be null"
+            );
+        }
+
+        // Convert both lengths to base unit (inches)
+
+        double thisLengthInBaseUnit =
+                this.convertToBaseUnit();
+
+        double thatLengthInBaseUnit =
+                thatLength.convertToBaseUnit();
+
+        // Add base unit values
+
+        double sumInBaseUnit =
+                thisLengthInBaseUnit +
+                thatLengthInBaseUnit;
+
+        // Convert sum back to unit of first operand
+
+        double convertedSum =
+                convertFromBaseToTargetUnit(
+                        sumInBaseUnit,
+                        this.unit
+                );
+
+        // Return new Length object (immutability)
+
+        return new Length(
+                convertedSum,
+                this.unit
+        );
+    }
+
+    // ==================================================
+    // UC6 UPDATE
+    // Reusable helper for converting
+    // base unit (inches) to target unit
+    // ==================================================
+
+    private double convertFromBaseToTargetUnit(
+            double lengthInInches,
+            LengthUnit targetUnit
+    ) {
+
+        double convertedValue =
+                lengthInInches /
+                targetUnit.getConversionFactor();
+
+        return Math.round(
+                convertedValue * 100.0
+        ) / 100.0;
+    }
+
+
     // Human readable output
-    // ==================================================
 
     @Override
     public String toString() {
@@ -169,10 +226,7 @@ public class Length {
         );
     }
 
-    // ==================================================
-    // UC5 UPDATE
     // Standalone testing
-    // ==================================================
 
     public static void main(
             String[] args

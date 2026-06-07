@@ -423,4 +423,376 @@ public class QuantityMeasurementAppTest {
                 converted.equals(expected)
         );
     }
+
+        @Test
+    public void testAddition_SameUnit_FeetPlusFeet() {
+
+        Length length1 =
+                new Length(
+                        1.0,
+                        Length.LengthUnit.FEET
+                );
+
+        Length length2 =
+                new Length(
+                        2.0,
+                        Length.LengthUnit.FEET
+                );
+
+        Length result =
+                QuantityMeasurementApp
+                        .demonstrateLengthAddition(
+                                length1,
+                                length2
+                        );
+
+        Length expected =
+                new Length(
+                        3.0,
+                        Length.LengthUnit.FEET
+                );
+
+        assertTrue(
+                result.equals(expected)
+        );
+    }
+
+        @Test
+    public void testAddition_SameUnit_InchPlusInch() {
+
+        Length length1 =
+                new Length(
+                        6.0,
+                        Length.LengthUnit.INCHES
+                );
+
+        Length length2 =
+                new Length(
+                        6.0,
+                        Length.LengthUnit.INCHES
+                );
+
+        Length result =
+                QuantityMeasurementApp
+                        .demonstrateLengthAddition(
+                                length1,
+                                length2
+                        );
+
+        Length expected =
+                new Length(
+                        12.0,
+                        Length.LengthUnit.INCHES
+                );
+
+        assertTrue(
+                result.equals(expected)
+        );
+    }
+
+        @Test
+    public void testAddition_CrossUnit_FeetPlusInches() {
+
+        Length feet =
+                new Length(
+                        1.0,
+                        Length.LengthUnit.FEET
+                );
+
+        Length inches =
+                new Length(
+                        12.0,
+                        Length.LengthUnit.INCHES
+                );
+
+        Length result =
+                QuantityMeasurementApp
+                        .demonstrateLengthAddition(
+                                feet,
+                                inches
+                        );
+
+        Length expected =
+                new Length(
+                        2.0,
+                        Length.LengthUnit.FEET
+                );
+
+        assertTrue(
+                result.equals(expected)
+        );
+    }
+
+
+        @Test
+    public void testAddition_CrossUnit_InchPlusFeet() {
+
+        Length inches =
+                new Length(
+                        12.0,
+                        Length.LengthUnit.INCHES
+                );
+
+        Length feet =
+                new Length(
+                        1.0,
+                        Length.LengthUnit.FEET
+                );
+
+        Length result =
+                QuantityMeasurementApp
+                        .demonstrateLengthAddition(
+                                inches,
+                                feet
+                        );
+
+        Length expected =
+                new Length(
+                        24.0,
+                        Length.LengthUnit.INCHES
+                );
+
+        assertTrue(
+                result.equals(expected)
+        );
+    }
+
+
+        @Test
+    public void testAddition_CrossUnit_YardPlusFeet() {
+
+        Length yard =
+                new Length(
+                        1.0,
+                        Length.LengthUnit.YARDS
+                );
+
+        Length feet =
+                new Length(
+                        3.0,
+                        Length.LengthUnit.FEET
+                );
+
+        Length result =
+                QuantityMeasurementApp
+                        .demonstrateLengthAddition(
+                                yard,
+                                feet
+                        );
+
+        Length expected =
+                new Length(
+                        2.0,
+                        Length.LengthUnit.YARDS
+                );
+
+        assertTrue(
+                result.equals(expected)
+        );
+    }
+
+
+        @Test
+    public void testAddition_CrossUnit_CentimeterPlusInch() {
+
+        Length cm =
+                new Length(
+                        2.54,
+                        Length.LengthUnit.CENTIMETERS
+                );
+
+        Length inch =
+                new Length(
+                        1.0,
+                        Length.LengthUnit.INCHES
+                );
+
+        Length result =
+                QuantityMeasurementApp
+                        .demonstrateLengthAddition(
+                                cm,
+                                inch
+                        );
+
+        Length expected =
+                new Length(
+                        5.08,
+                        Length.LengthUnit.CENTIMETERS
+                );
+
+        assertTrue(
+                result.equals(expected)
+        );
+    }
+
+
+        @Test
+    public void testAddition_Commutativity() {
+
+        Length feet =
+                new Length(
+                        1.0,
+                        Length.LengthUnit.FEET
+                );
+
+        Length inches =
+                new Length(
+                        12.0,
+                        Length.LengthUnit.INCHES
+                );
+
+        Length result1 =
+                feet.add(inches);
+
+        Length result2 =
+                inches.add(feet);
+
+        assertEquals(
+                24.0,
+                result2.convertTo(
+                        Length.LengthUnit.INCHES
+                ).convertTo(
+                        Length.LengthUnit.INCHES
+                ).equals(
+                        new Length(
+                                24.0,
+                                Length.LengthUnit.INCHES
+                        )
+                ) ? 24.0 : 0.0
+        );
+    }
+
+
+        @Test
+    public void testAddition_WithZero() {
+
+        Length feet =
+                new Length(
+                        5.0,
+                        Length.LengthUnit.FEET
+                );
+
+        Length zero =
+                new Length(
+                        0.0,
+                        Length.LengthUnit.INCHES
+                );
+
+        Length result =
+                feet.add(zero);
+
+        assertTrue(
+                result.equals(
+                        new Length(
+                                5.0,
+                                Length.LengthUnit.FEET
+                        )
+                )
+        );
+    }
+
+
+        @Test
+    public void testAddition_NegativeValues() {
+
+        Length length1 =
+                new Length(
+                        5.0,
+                        Length.LengthUnit.FEET
+                );
+
+        Length length2 =
+                new Length(
+                        -2.0,
+                        Length.LengthUnit.FEET
+                );
+
+        Length result =
+                length1.add(length2);
+
+        assertTrue(
+                result.equals(
+                        new Length(
+                                3.0,
+                                Length.LengthUnit.FEET
+                        )
+                )
+        );
+    }
+
+
+        @Test
+    public void testAddition_NullSecondOperand() {
+
+        Length length =
+                new Length(
+                        1.0,
+                        Length.LengthUnit.FEET
+                );
+
+        assertThrows(
+                IllegalArgumentException.class,
+                () -> length.add(null)
+        );
+    }
+
+
+        @Test
+    public void testAddition_LargeValues() {
+
+        Length length1 =
+                new Length(
+                        1000000.0,
+                        Length.LengthUnit.FEET
+                );
+
+        Length length2 =
+                new Length(
+                        1000000.0,
+                        Length.LengthUnit.FEET
+                );
+
+        Length result =
+                length1.add(length2);
+
+        assertTrue(
+                result.equals(
+                        new Length(
+                                2000000.0,
+                                Length.LengthUnit.FEET
+                        )
+                )
+        );
+    }
+
+
+        @Test
+    public void testAddition_SmallValues() {
+
+        Length length1 =
+                new Length(
+                        0.01,
+                        Length.LengthUnit.FEET
+                );
+
+        Length length2 =
+                new Length(
+                        0.02,
+                        Length.LengthUnit.FEET
+                );
+
+        Length result =
+                length1.add(length2);
+
+        assertTrue(
+                result.equals(
+                        new Length(
+                                0.03,
+                                Length.LengthUnit.FEET
+                        )
+                )
+        );
+    }
+
+
 }
