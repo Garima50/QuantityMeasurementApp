@@ -97,6 +97,45 @@ public class QuantityMeasurementApp {
     }
 
 
+// ==================================================
+// UC7 UPDATE
+// Demonstrate addition with explicit target unit
+// ==================================================
+
+public static Length demonstrateLengthAddition(
+        Length length1,
+        Length length2,
+        Length.LengthUnit targetUnit
+) {
+
+    if (length1 == null || length2 == null) {
+
+        throw new IllegalArgumentException(
+                "Lengths cannot be null"
+        );
+    }
+
+    if (targetUnit == null) {
+
+        throw new IllegalArgumentException(
+                "Target unit cannot be null"
+        );
+    }
+
+    return length1.add(
+            length2,
+            targetUnit
+    );
+}
+
+
+    // ==================================================
+    // UC7 UPDATE
+    // Private utility method for performing addition
+    // conversion on base unit value
+    // ==================================================
+
+
     // Overloaded Conversion Method
 
     public static Length demonstrateLengthConversion(

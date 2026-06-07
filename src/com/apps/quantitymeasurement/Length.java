@@ -145,19 +145,14 @@ public class Length {
         );
     }
 
-
-    // ==================================================
-    // UC6 UPDATE
     // Addition of two length measurements
     // Result returned in unit of first operand
-    // ==================================================
 
     public Length add(
+
             Length thatLength
     ) {
-
         if (thatLength == null) {
-
             throw new IllegalArgumentException(
                     "Length to add cannot be null"
             );
@@ -167,7 +162,6 @@ public class Length {
 
         double thisLengthInBaseUnit =
                 this.convertToBaseUnit();
-
         double thatLengthInBaseUnit =
                 thatLength.convertToBaseUnit();
 
@@ -190,14 +184,77 @@ public class Length {
         return new Length(
                 convertedSum,
                 this.unit
+
         );
+
     }
 
     // ==================================================
-    // UC6 UPDATE
+    // UC7 UPDATE
+    // Addition with explicit target unit specification
+    // ==================================================
+
+    public Length add(
+            Length length,
+            LengthUnit targetUnit
+    ) {
+
+        if (length == null) {
+
+            throw new IllegalArgumentException(
+                    "Length to add cannot be null"
+            );
+        }
+
+        if (targetUnit == null) {
+
+            throw new IllegalArgumentException(
+                    "Target unit cannot be null"
+            );
+        }
+
+        return addAndConvert(
+                length,
+                targetUnit
+        );
+    }
+
+
+    // ==================================================
+    // UC7 UPDATE
+    // Private utility method for performing addition
+    // conversion on base unit value
+    // ==================================================
+
+     private Length addAndConvert(
+            Length length,
+            LengthUnit targetUnit
+    ) {
+
+        double thisLengthInBaseUnit =
+                this.convertToBaseUnit();
+
+        double thatLengthInBaseUnit =
+                length.convertToBaseUnit();
+
+        double sumInBaseUnit =
+                thisLengthInBaseUnit +
+                thatLengthInBaseUnit;
+
+        double convertedSum =
+                convertFromBaseToTargetUnit(
+                        sumInBaseUnit,
+                        targetUnit
+                );
+
+        return new Length(
+                convertedSum,
+                targetUnit
+        );
+    }
+
     // Reusable helper for converting
     // base unit (inches) to target unit
-    // ==================================================
 
     private double convertFromBaseToTargetUnit(
             double lengthInInches,
