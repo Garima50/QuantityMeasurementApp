@@ -1,11 +1,146 @@
 package com.apps.quantitymeasurement;
 
 
-// UC8 UPDATE
-// LengthUnit extracted as standalone enum
-
 public class QuantityMeasurementApp {
 
+
+    // UC9 UPDATE
+    // New Methods for Weight Functionality
+
+    public static boolean demonstrateWeightEquality(
+            Weight weight1,
+            Weight weight2
+    ) {
+
+        return weight1.equals(weight2);
+    }
+
+    // Demonstrate comparison
+
+    public static boolean demonstrateWeightComparison(
+            double value1,
+            WeightUnit unit1,
+            double value2,
+            WeightUnit unit2
+    ) {
+
+        Weight weight1 =
+                new Weight(
+                        value1,
+                        unit1
+                );
+
+        Weight weight2 =
+                new Weight(
+                        value2,
+                        unit2
+                );
+
+        boolean result =
+                demonstrateWeightEquality(
+                        weight1,
+                        weight2
+                );
+
+        if (result) {
+
+            System.out.println(
+                    "The two weight measurements are equal."
+            );
+        }
+        else {
+
+            System.out.println(
+                    "The two weight measurements are not equal."
+            );
+        }
+
+        return result;
+    }
+
+    // UC9 UPDATE
+    // Conversion Method
+
+    public static Weight demonstrateWeightConversion(
+            double value,
+            WeightUnit fromUnit,
+            WeightUnit toUnit
+    ) {
+
+        Weight weight =
+                new Weight(
+                        value,
+                        fromUnit
+                );
+
+        return weight.convertTo(
+                toUnit
+        );
+    }
+
+    // UC9 UPDATE
+    // Overloaded Conversion Method
+
+    public static Weight demonstrateWeightConversion(
+            Weight weight,
+            WeightUnit toUnit
+    ) {
+
+        return weight.convertTo(
+                toUnit
+        );
+    }
+
+    // UC9 UPDATE
+    // Demonstrate addition of two weight measurements
+
+    public static Weight demonstrateWeightAddition(
+            Weight weight1,
+            Weight weight2
+    ) {
+
+        if (weight1 == null || weight2 == null) {
+
+            throw new IllegalArgumentException(
+                    "Weights cannot be null"
+            );
+        }
+
+        return weight1.add(
+                weight2
+        );
+    }
+
+    // UC9 UPDATE
+    // Demonstrate addition with explicit target unit
+
+    public static Weight demonstrateWeightAddition(
+            Weight weight1,
+            Weight weight2,
+            WeightUnit targetUnit
+    ) {
+
+        if (weight1 == null || weight2 == null) {
+
+            throw new IllegalArgumentException(
+                    "Weights cannot be null"
+            );
+        }
+
+        if (targetUnit == null) {
+
+            throw new IllegalArgumentException(
+                    "Target unit cannot be null"
+            );
+        }
+
+        return weight1.add(
+                weight2,
+                targetUnit
+        );
+    }
+
+    // LengthUnit extracted as standalone enum
     // Existing Equality Method
 
     public static boolean demonstrateLengthEquality(
@@ -142,6 +277,132 @@ public static Length demonstrateLengthAddition(
 
 
     public static void main (String[] args) {
+
+
+                System.out.println(
+                "===== UC9 WEIGHT EQUALITY TESTS ====="
+        );
+
+        demonstrateWeightComparison(
+                1.0,
+                WeightUnit.KILOGRAM,
+                1000.0,
+                WeightUnit.GRAM
+        );
+
+        demonstrateWeightComparison(
+                1.0,
+                WeightUnit.POUND,
+                453.59,
+                WeightUnit.GRAM
+        );
+
+        System.out.println();
+
+        System.out.println(
+                "===== UC9 WEIGHT CONVERSION TESTS ====="
+        );
+
+        Weight weightInGrams =
+                demonstrateWeightConversion(
+                        1.0,
+                        WeightUnit.KILOGRAM,
+                        WeightUnit.GRAM
+                );
+
+        System.out.println(
+                "1 KILOGRAM -> "
+                + weightInGrams
+        );
+
+        Weight pounds =
+                new Weight(
+                        2.0,
+                        WeightUnit.POUND
+                );
+
+        Weight convertedWeight =
+                demonstrateWeightConversion(
+                        pounds,
+                        WeightUnit.KILOGRAM
+                );
+
+        System.out.println(
+                "2 POUNDS -> "
+                + convertedWeight
+        );
+
+        System.out.println();
+
+        System.out.println(
+                "===== UC9 WEIGHT ADDITION TESTS ====="
+        );
+
+        Weight kilogram =
+                new Weight(
+                        1.0,
+                        WeightUnit.KILOGRAM
+                );
+
+        Weight grams =
+                new Weight(
+                        1000.0,
+                        WeightUnit.GRAM
+                );
+
+        System.out.println(
+                "1 KG + 1000 G = "
+                + demonstrateWeightAddition(
+                        kilogram,
+                        grams
+                )
+        );
+
+        Weight pound =
+                new Weight(
+                        1.0,
+                        WeightUnit.POUND
+                );
+
+        Weight gram =
+                new Weight(
+                        453.59,
+                        WeightUnit.GRAM
+                );
+
+        System.out.println(
+                "1 POUND + 453.59 G = "
+                + demonstrateWeightAddition(
+                        pound,
+                        gram
+                )
+        );
+
+        System.out.println();
+
+        System.out.println(
+                "===== UC9 WEIGHT ADDITION WITH TARGET UNIT ====="
+        );
+
+        System.out.println(
+                "1 KG + 1000 G IN GRAMS = "
+                + demonstrateWeightAddition(
+                        kilogram,
+                        grams,
+                        WeightUnit.GRAM
+                )
+        );
+
+        System.out.println(
+                "1 POUND + 453.59 G IN POUNDS = "
+                + demonstrateWeightAddition(
+                        pound,
+                        gram,
+                        WeightUnit.POUND
+                )
+        );
+
+        System.out.println();
 
         System.out.println(
                 "===== EQUALITY TESTS ====="

@@ -1099,4 +1099,270 @@ public class QuantityMeasurementAppTest {
     }
 
 
+        // ==================================================
+    // UC9 UPDATE
+    // WEIGHT EQUALITY TESTS
+    // ==================================================
+
+    @Test
+    public void testEquality_KilogramToKilogram_SameValue() {
+
+        Weight weight1 =
+                new Weight(
+                        1.0,
+                        WeightUnit.KILOGRAM
+                );
+
+        Weight weight2 =
+                new Weight(
+                        1.0,
+                        WeightUnit.KILOGRAM
+                );
+
+        assertTrue(
+                weight1.equals(weight2)
+        );
+    }
+
+    @Test
+    public void testEquality_KilogramToKilogram_DifferentValue() {
+
+        Weight weight1 =
+                new Weight(
+                        1.0,
+                        WeightUnit.KILOGRAM
+                );
+
+        Weight weight2 =
+                new Weight(
+                        2.0,
+                        WeightUnit.KILOGRAM
+                );
+
+        assertFalse(
+                weight1.equals(weight2)
+        );
+    }
+
+    @Test
+    public void testEquality_KilogramToGram_EquivalentValue() {
+
+        Weight kilogram =
+                new Weight(
+                        1.0,
+                        WeightUnit.KILOGRAM
+                );
+
+        Weight gram =
+                new Weight(
+                        1000.0,
+                        WeightUnit.GRAM
+                );
+
+        assertTrue(
+                kilogram.equals(gram)
+        );
+    }
+
+    @Test
+    public void testEquality_GramToKilogram_EquivalentValue() {
+
+        Weight gram =
+                new Weight(
+                        1000.0,
+                        WeightUnit.GRAM
+                );
+
+        Weight kilogram =
+                new Weight(
+                        1.0,
+                        WeightUnit.KILOGRAM
+                );
+
+        assertTrue(
+                gram.equals(kilogram)
+        );
+    }
+
+    @Test
+    public void testEquality_PoundToPound_SameValue() {
+
+        Weight weight1 =
+                new Weight(
+                        2.0,
+                        WeightUnit.POUND
+                );
+
+        Weight weight2 =
+                new Weight(
+                        2.0,
+                        WeightUnit.POUND
+                );
+
+        assertTrue(
+                weight1.equals(weight2)
+        );
+    }
+
+    @Test
+    public void testEquality_KilogramToPound_EquivalentValue() {
+
+        Weight kilogram =
+                new Weight(
+                        1.0,
+                        WeightUnit.KILOGRAM
+                );
+
+        Weight pound =
+                new Weight(
+                        2.20462,
+                        WeightUnit.POUND
+                );
+
+        assertTrue(
+                kilogram.equals(pound)
+        );
+    }
+
+    @Test
+    public void testEquality_GramToPound_EquivalentValue() {
+
+        Weight gram =
+                new Weight(
+                        453.592,
+                        WeightUnit.GRAM
+                );
+
+        Weight pound =
+                new Weight(
+                        1.0,
+                        WeightUnit.POUND
+                );
+
+        assertTrue(
+                gram.equals(pound)
+        );
+    }
+
+    @Test
+    public void testEquality_NullComparison() {
+
+        Weight weight =
+                new Weight(
+                        1.0,
+                        WeightUnit.KILOGRAM
+                );
+
+        assertFalse(
+                weight.equals(null)
+        );
+    }
+
+    @Test
+    public void testEquality_SameReference() {
+
+        Weight weight =
+                new Weight(
+                        1.0,
+                        WeightUnit.KILOGRAM
+                );
+
+        assertTrue(
+                weight.equals(weight)
+        );
+    }
+
+    @Test
+    public void testEquality_NullUnit() {
+
+        assertThrows(
+                IllegalArgumentException.class,
+                () -> new Weight(
+                        1.0,
+                        null
+                )
+        );
+    }
+
+    @Test
+    public void testEquality_ZeroValue() {
+
+        Weight weight1 =
+                new Weight(
+                        0.0,
+                        WeightUnit.KILOGRAM
+                );
+
+        Weight weight2 =
+                new Weight(
+                        0.0,
+                        WeightUnit.GRAM
+                );
+
+        assertTrue(
+                weight1.equals(weight2)
+        );
+    }
+
+    @Test
+    public void testEquality_NegativeWeight() {
+
+        Weight kilogram =
+                new Weight(
+                        -1.0,
+                        WeightUnit.KILOGRAM
+                );
+
+        Weight gram =
+                new Weight(
+                        -1000.0,
+                        WeightUnit.GRAM
+                );
+
+        assertTrue(
+                kilogram.equals(gram)
+        );
+    }
+
+    @Test
+    public void testEquality_LargeWeightValue() {
+
+        Weight gram =
+                new Weight(
+                        1000000.0,
+                        WeightUnit.GRAM
+                );
+
+        Weight kilogram =
+                new Weight(
+                        1000.0,
+                        WeightUnit.KILOGRAM
+                );
+
+        assertTrue(
+                gram.equals(kilogram)
+        );
+    }
+
+    @Test
+    public void testEquality_SmallWeightValue() {
+
+        Weight kilogram =
+                new Weight(
+                        0.001,
+                        WeightUnit.KILOGRAM
+                );
+
+        Weight gram =
+                new Weight(
+                        1.0,
+                        WeightUnit.GRAM
+                );
+
+        assertTrue(
+                kilogram.equals(gram)
+        );
+    }
+
+
 }
