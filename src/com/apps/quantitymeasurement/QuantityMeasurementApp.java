@@ -74,10 +74,8 @@ public class QuantityMeasurementApp {
         );
     }
 
-    // ==================================================
-    // UC6 UPDATE
+
     // Demonstrate addition of two length measurements
-    // ==================================================
 
     public static Length demonstrateLengthAddition(
             Length length1,
