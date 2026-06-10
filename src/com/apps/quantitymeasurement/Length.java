@@ -8,25 +8,6 @@ public class Length {
     private double value;
     private LengthUnit unit;
 
-    public enum LengthUnit {
-
-        FEET(12.0),
-        INCHES(1.0),
-
-        YARDS(36.0),
-        CENTIMETERS(0.393701);
-
-        private final double conversionFactor;
-
-        LengthUnit(double conversionFactor) {
-            this.conversionFactor = conversionFactor;
-        }
-
-        public double getConversionFactor() {
-            return conversionFactor;
-        }
-    }
-
     // Constructor
 
     public Length(
@@ -54,17 +35,14 @@ public class Length {
 
 
     // Utility method
-    // Convert to base unit (inches)
+    // UC8 UPDATE
+    // Delegate conversion to standalone LengthUnit
 
     private double convertToBaseUnit() {
 
-        double baseValue =
-                value *
-                unit.getConversionFactor();
-
-        return Math.round(
-                baseValue * 100.0
-        ) / 100.0;
+        return unit.convertToBaseUnit(
+                value
+        );
     }
 
 
@@ -119,7 +97,7 @@ public class Length {
 
     // Conversion Feature
 
-    public Length convertTo(
+     public Length convertTo(
             LengthUnit targetUnit
     ) {
 
@@ -134,9 +112,8 @@ public class Length {
                 convertToBaseUnit();
 
         double convertedValue =
-                convertFromBaseToTargetUnit(
-                        baseValue,
-                        targetUnit
+                targetUnit.convertFromBaseUnit(
+                        baseValue
                 );
 
         return new Length(
@@ -189,10 +166,7 @@ public class Length {
 
     }
 
-    // ==================================================
-    // UC7 UPDATE
     // Addition with explicit target unit specification
-    // ==================================================
 
     public Length add(
             Length length,
@@ -221,12 +195,11 @@ public class Length {
 
 
     // ==================================================
-    // UC7 UPDATE
-    // Private utility method for performing addition
-    // conversion on base unit value
+    // UC8 UPDATE
+    // Delegate conversion responsibility to LengthUnit
     // ==================================================
 
-     private Length addAndConvert(
+    private Length addAndConvert(
             Length length,
             LengthUnit targetUnit
     ) {
@@ -242,9 +215,8 @@ public class Length {
                 thatLengthInBaseUnit;
 
         double convertedSum =
-                convertFromBaseToTargetUnit(
-                        sumInBaseUnit,
-                        targetUnit
+                targetUnit.convertFromBaseUnit(
+                        sumInBaseUnit
                 );
 
         return new Length(
@@ -254,20 +226,20 @@ public class Length {
     }
 
     // Reusable helper for converting
-    // base unit (inches) to target unit
+
+     // ==================================================
+     // UC8 UPDATE
+     // Delegate conversion to LengthUnit
+     // ==================================================
 
     private double convertFromBaseToTargetUnit(
             double lengthInInches,
             LengthUnit targetUnit
     ) {
 
-        double convertedValue =
-                lengthInInches /
-                targetUnit.getConversionFactor();
-
-        return Math.round(
-                convertedValue * 100.0
-        ) / 100.0;
+        return targetUnit.convertFromBaseUnit(
+                lengthInInches
+        );
     }
 
 

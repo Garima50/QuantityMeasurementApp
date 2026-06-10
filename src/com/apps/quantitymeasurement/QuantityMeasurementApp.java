@@ -1,5 +1,9 @@
 package com.apps.quantitymeasurement;
 
+
+// UC8 UPDATE
+// LengthUnit extracted as standalone enum
+
 public class QuantityMeasurementApp {
 
     // Existing Equality Method
@@ -16,9 +20,9 @@ public class QuantityMeasurementApp {
 
     public static boolean demonstrateLengthComparison(
             double value1,
-            Length.LengthUnit unit1,
+            LengthUnit unit1,
             double value2,
-            Length.LengthUnit unit2
+            LengthUnit unit2
     ) {
 
         Length length1 =
@@ -59,8 +63,8 @@ public class QuantityMeasurementApp {
 
     public static Length demonstrateLengthConversion(
             double value,
-            Length.LengthUnit fromUnit,
-            Length.LengthUnit toUnit
+            LengthUnit fromUnit,
+            LengthUnit toUnit
     ) {
 
         Length length =
@@ -74,10 +78,8 @@ public class QuantityMeasurementApp {
         );
     }
 
-    // ==================================================
-    // UC6 UPDATE
+
     // Demonstrate addition of two length measurements
-    // ==================================================
 
     public static Length demonstrateLengthAddition(
             Length length1,
@@ -97,15 +99,12 @@ public class QuantityMeasurementApp {
     }
 
 
-// ==================================================
-// UC7 UPDATE
 // Demonstrate addition with explicit target unit
-// ==================================================
 
 public static Length demonstrateLengthAddition(
         Length length1,
         Length length2,
-        Length.LengthUnit targetUnit
+        LengthUnit targetUnit
 ) {
 
     if (length1 == null || length2 == null) {
@@ -129,18 +128,11 @@ public static Length demonstrateLengthAddition(
 }
 
 
-    // ==================================================
-    // UC7 UPDATE
-    // Private utility method for performing addition
-    // conversion on base unit value
-    // ==================================================
-
-
     // Overloaded Conversion Method
 
     public static Length demonstrateLengthConversion(
             Length length,
-            Length.LengthUnit toUnit
+            LengthUnit toUnit
     ) {
 
         return length.convertTo(
@@ -157,37 +149,37 @@ public static Length demonstrateLengthAddition(
 
         demonstrateLengthComparison(
                 1.0,
-                Length.LengthUnit.FEET,
+                LengthUnit.FEET,
                 1.0,
-                Length.LengthUnit.FEET
+                LengthUnit.FEET
         );
 
         demonstrateLengthComparison(
                 1.0,
-                Length.LengthUnit.INCHES,
+                LengthUnit.INCHES,
                 1.0,
-                Length.LengthUnit.INCHES
+                LengthUnit.INCHES
         );
 
         demonstrateLengthComparison(
                 1.0,
-                Length.LengthUnit.FEET,
+                LengthUnit.FEET,
                 12.0,
-                Length.LengthUnit.INCHES
+                LengthUnit.INCHES
         );
 
         demonstrateLengthComparison(
                 1.0,
-                Length.LengthUnit.YARDS,
+                LengthUnit.YARDS,
                 36.0,
-                Length.LengthUnit.INCHES
+                LengthUnit.INCHES
         );
 
         demonstrateLengthComparison(
                 30.48,
-                Length.LengthUnit.CENTIMETERS,
+                LengthUnit.CENTIMETERS,
                 1.0,
-                Length.LengthUnit.FEET
+                LengthUnit.FEET
         );
 
         System.out.println();
@@ -199,8 +191,8 @@ public static Length demonstrateLengthAddition(
         Length lengthInInches =
                 demonstrateLengthConversion(
                         3.0,
-                        Length.LengthUnit.FEET,
-                        Length.LengthUnit.INCHES
+                        LengthUnit.FEET,
+                        LengthUnit.INCHES
                 );
 
         System.out.println(
@@ -211,13 +203,13 @@ public static Length demonstrateLengthAddition(
         Length lengthInYards =
                 new Length(
                         2.0,
-                        Length.LengthUnit.YARDS
+                        LengthUnit.YARDS
                 );
 
         Length converted =
                 demonstrateLengthConversion(
                         lengthInYards,
-                        Length.LengthUnit.INCHES
+                        LengthUnit.INCHES
                 );
 
         System.out.println(
@@ -228,8 +220,8 @@ public static Length demonstrateLengthAddition(
         Length cmConversion =
                 demonstrateLengthConversion(
                         30.48,
-                        Length.LengthUnit.CENTIMETERS,
-                        Length.LengthUnit.FEET
+                        LengthUnit.CENTIMETERS,
+                        LengthUnit.FEET
                 );
 
         System.out.println(
@@ -246,13 +238,13 @@ public static Length demonstrateLengthAddition(
         Length feet =
                 new Length(
                         1.0,
-                        Length.LengthUnit.FEET
+                        LengthUnit.FEET
                 );
 
         Length inches =
                 new Length(
                         12.0,
-                        Length.LengthUnit.INCHES
+                        LengthUnit.INCHES
                 );
 
         System.out.println(
@@ -266,13 +258,13 @@ public static Length demonstrateLengthAddition(
         Length yard =
                 new Length(
                         1.0,
-                        Length.LengthUnit.YARDS
+                        LengthUnit.YARDS
                 );
 
         Length threeFeet =
                 new Length(
                         3.0,
-                        Length.LengthUnit.FEET
+                        LengthUnit.FEET
                 );
 
         System.out.println(
@@ -286,13 +278,13 @@ public static Length demonstrateLengthAddition(
         Length cm =
                 new Length(
                         2.54,
-                        Length.LengthUnit.CENTIMETERS
+                        LengthUnit.CENTIMETERS
                 );
 
         Length oneInch =
                 new Length(
                         1.0,
-                        Length.LengthUnit.INCHES
+                        LengthUnit.INCHES
                 );
 
         System.out.println(
