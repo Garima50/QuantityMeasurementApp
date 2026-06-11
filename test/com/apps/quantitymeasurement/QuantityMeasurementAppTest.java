@@ -1365,4 +1365,720 @@ public class QuantityMeasurementAppTest {
     }
 
 
+        // ==================================================
+    // UC9 UPDATE
+    // WEIGHT CONVERSION TESTS
+    // ==================================================
+
+    @Test
+    public void testConversion_PoundToKilogram() {
+
+        Weight pound =
+                new Weight(
+                        2.20462,
+                        WeightUnit.POUND
+                );
+
+        Weight converted =
+                pound.convertTo(
+                        WeightUnit.KILOGRAM
+                );
+
+        Weight expected =
+                new Weight(
+                        1.0,
+                        WeightUnit.KILOGRAM
+                );
+
+        assertTrue(
+                converted.equals(expected)
+        );
+    }
+
+    @Test
+    public void testConversion_KilogramToPound() {
+
+        Weight kilogram =
+                new Weight(
+                        1.0,
+                        WeightUnit.KILOGRAM
+                );
+
+        Weight converted =
+                kilogram.convertTo(
+                        WeightUnit.POUND
+                );
+
+        Weight expected =
+                new Weight(
+                        2.20462,
+                        WeightUnit.POUND
+                );
+
+        assertTrue(
+                converted.equals(expected)
+        );
+    }
+
+    @Test
+    public void testConversion_KilogramToGram() {
+
+        Weight kilogram =
+                new Weight(
+                        1.0,
+                        WeightUnit.KILOGRAM
+                );
+
+        Weight converted =
+                kilogram.convertTo(
+                        WeightUnit.GRAM
+                );
+
+        Weight expected =
+                new Weight(
+                        1000.0,
+                        WeightUnit.GRAM
+                );
+
+        assertTrue(
+                converted.equals(expected)
+        );
+    }
+
+    @Test
+    public void testConversion_GramToKilogram() {
+
+        Weight gram =
+                new Weight(
+                        1000.0,
+                        WeightUnit.GRAM
+                );
+
+        Weight converted =
+                gram.convertTo(
+                        WeightUnit.KILOGRAM
+                );
+
+        Weight expected =
+                new Weight(
+                        1.0,
+                        WeightUnit.KILOGRAM
+                );
+
+        assertTrue(
+                converted.equals(expected)
+        );
+    }
+
+    @Test
+    public void testConversion_SameUnit() {
+
+        Weight weight =
+                new Weight(
+                        5.0,
+                        WeightUnit.KILOGRAM
+                );
+
+        Weight converted =
+                weight.convertTo(
+                        WeightUnit.KILOGRAM
+                );
+
+        assertTrue(
+                converted.equals(weight)
+        );
+    }
+
+    @Test
+    public void testConversion_ZeroValue() {
+
+        Weight kilogram =
+                new Weight(
+                        0.0,
+                        WeightUnit.KILOGRAM
+                );
+
+        Weight converted =
+                kilogram.convertTo(
+                        WeightUnit.GRAM
+                );
+
+        Weight expected =
+                new Weight(
+                        0.0,
+                        WeightUnit.GRAM
+                );
+
+        assertTrue(
+                converted.equals(expected)
+        );
+    }
+
+    @Test
+    public void testConversion_NegativeValue() {
+
+        Weight kilogram =
+                new Weight(
+                        -1.0,
+                        WeightUnit.KILOGRAM
+                );
+
+        Weight converted =
+                kilogram.convertTo(
+                        WeightUnit.GRAM
+                );
+
+        Weight expected =
+                new Weight(
+                        -1000.0,
+                        WeightUnit.GRAM
+                );
+
+        assertTrue(
+                converted.equals(expected)
+        );
+    }
+
+    @Test
+    public void testConversion_RoundTrip() {
+
+        Weight original =
+                new Weight(
+                        1.5,
+                        WeightUnit.KILOGRAM
+                );
+
+        Weight converted =
+                original.convertTo(
+                        WeightUnit.GRAM
+                ).convertTo(
+                        WeightUnit.KILOGRAM
+                );
+
+        assertTrue(
+                converted.equals(original)
+        );
+    }
+
+    @Test
+    public void testConversion_NullTargetUnit() {
+
+        Weight weight =
+                new Weight(
+                        1.0,
+                        WeightUnit.KILOGRAM
+                );
+
+        assertThrows(
+                IllegalArgumentException.class,
+                () -> weight.convertTo(null)
+        );
+    }
+
+
+        // ==================================================
+    // UC9 UPDATE
+    // WEIGHT ADDITION TESTS
+    // ==================================================
+
+    @Test
+    public void testAddition_SameUnit_KilogramPlusKilogram() {
+
+        Weight weight1 =
+                new Weight(
+                        1.0,
+                        WeightUnit.KILOGRAM
+                );
+
+        Weight weight2 =
+                new Weight(
+                        2.0,
+                        WeightUnit.KILOGRAM
+                );
+
+        Weight result =
+                QuantityMeasurementApp
+                        .demonstrateWeightAddition(
+                                weight1,
+                                weight2
+                        );
+
+        Weight expected =
+                new Weight(
+                        3.0,
+                        WeightUnit.KILOGRAM
+                );
+
+        assertTrue(
+                result.equals(expected)
+        );
+    }
+
+    @Test
+    public void testAddition_CrossUnit_KilogramPlusGram() {
+
+        Weight kilogram =
+                new Weight(
+                        1.0,
+                        WeightUnit.KILOGRAM
+                );
+
+        Weight gram =
+                new Weight(
+                        1000.0,
+                        WeightUnit.GRAM
+                );
+
+        Weight result =
+                QuantityMeasurementApp
+                        .demonstrateWeightAddition(
+                                kilogram,
+                                gram
+                        );
+
+        Weight expected =
+                new Weight(
+                        2.0,
+                        WeightUnit.KILOGRAM
+                );
+
+        assertTrue(
+                result.equals(expected)
+        );
+    }
+
+    @Test
+    public void testAddition_CrossUnit_PoundPlusKilogram() {
+
+        Weight pound =
+                new Weight(
+                        2.20462,
+                        WeightUnit.POUND
+                );
+
+        Weight kilogram =
+                new Weight(
+                        1.0,
+                        WeightUnit.KILOGRAM
+                );
+
+        Weight result =
+                QuantityMeasurementApp
+                        .demonstrateWeightAddition(
+                                pound,
+                                kilogram
+                        );
+
+        Weight expected =
+                new Weight(
+                        4.40924,
+                        WeightUnit.POUND
+                );
+
+        assertTrue(
+                result.equals(expected)
+        );
+    }
+
+    @Test
+    public void testAddition_ExplicitTargetUnit_Gram() {
+
+        Weight kilogram =
+                new Weight(
+                        1.0,
+                        WeightUnit.KILOGRAM
+                );
+
+        Weight gram =
+                new Weight(
+                        1000.0,
+                        WeightUnit.GRAM
+                );
+
+        Weight result =
+                QuantityMeasurementApp
+                        .demonstrateWeightAddition(
+                                kilogram,
+                                gram,
+                                WeightUnit.GRAM
+                        );
+
+        Weight expected =
+                new Weight(
+                        2000.0,
+                        WeightUnit.GRAM
+                );
+
+        assertTrue(
+                result.equals(expected)
+        );
+    }
+
+    @Test
+    public void testAddition_ExplicitTargetUnit_Kilogram() {
+
+        Weight kilogram =
+                new Weight(
+                        1.0,
+                        WeightUnit.KILOGRAM
+                );
+
+        Weight gram =
+                new Weight(
+                        1000.0,
+                        WeightUnit.GRAM
+                );
+
+        Weight result =
+                QuantityMeasurementApp
+                        .demonstrateWeightAddition(
+                                kilogram,
+                                gram,
+                                WeightUnit.KILOGRAM
+                        );
+
+        Weight expected =
+                new Weight(
+                        2.0,
+                        WeightUnit.KILOGRAM
+                );
+
+        assertTrue(
+                result.equals(expected)
+        );
+    }
+
+    @Test
+    public void testAddition_ExplicitTargetUnit_Pound() {
+
+        Weight pound =
+                new Weight(
+                        1.0,
+                        WeightUnit.POUND
+                );
+
+        Weight gram =
+                new Weight(
+                        453.592,
+                        WeightUnit.GRAM
+                );
+
+        Weight result =
+                QuantityMeasurementApp
+                        .demonstrateWeightAddition(
+                                pound,
+                                gram,
+                                WeightUnit.POUND
+                        );
+
+        Weight expected =
+                new Weight(
+                        1.98,
+                        WeightUnit.POUND
+                );
+
+        assertTrue(
+                result.equals(expected)
+        );
+    }
+
+    @Test
+    public void testWeightAddition_Commutativity() {
+
+        Weight kilogram =
+                new Weight(
+                        1.0,
+                        WeightUnit.KILOGRAM
+                );
+
+        Weight gram =
+                new Weight(
+                        1000.0,
+                        WeightUnit.GRAM
+                );
+
+        Weight result1 =
+                kilogram.add(
+                        gram,
+                        WeightUnit.KILOGRAM
+                );
+
+        Weight result2 =
+                gram.add(
+                        kilogram,
+                        WeightUnit.KILOGRAM
+                );
+
+        assertTrue(
+                result1.equals(result2)
+        );
+    }
+
+    @Test
+    public void testWeightAddition_WithZero() {
+
+        Weight kilogram =
+                new Weight(
+                        5.0,
+                        WeightUnit.KILOGRAM
+                );
+
+        Weight zero =
+                new Weight(
+                        0.0,
+                        WeightUnit.GRAM
+                );
+
+        Weight result =
+                kilogram.add(zero);
+
+        assertTrue(
+                result.equals(
+                        new Weight(
+                                5.0,
+                                WeightUnit.KILOGRAM
+                        )
+                )
+        );
+    }
+
+    @Test
+    public void testWeightAddition_NegativeValues() {
+
+        Weight weight1 =
+                new Weight(
+                        5.0,
+                        WeightUnit.KILOGRAM
+                );
+
+        Weight weight2 =
+                new Weight(
+                        -2.0,
+                        WeightUnit.KILOGRAM
+                );
+
+        Weight result =
+                weight1.add(weight2);
+
+        assertTrue(
+                result.equals(
+                        new Weight(
+                                3.0,
+                                WeightUnit.KILOGRAM
+                        )
+                )
+        );
+    }
+
+    @Test
+    public void testWeightAddition_NullSecondOperand() {
+
+        Weight weight =
+                new Weight(
+                        1.0,
+                        WeightUnit.KILOGRAM
+                );
+
+        assertThrows(
+                IllegalArgumentException.class,
+                () -> weight.add(null)
+        );
+    }
+
+    @Test
+    public void testWeightAddition_LargeValues() {
+
+        Weight weight1 =
+                new Weight(
+                        1000000.0,
+                        WeightUnit.KILOGRAM
+                );
+
+        Weight weight2 =
+                new Weight(
+                        1000000.0,
+                        WeightUnit.KILOGRAM
+                );
+
+        Weight result =
+                weight1.add(weight2);
+
+        assertTrue(
+                result.equals(
+                        new Weight(
+                                2000000.0,
+                                WeightUnit.KILOGRAM
+                        )
+                )
+        );
+    }
+
+    @Test
+    public void testWeightAddition_ExplicitTargetUnit_NullTargetUnit() {
+
+        Weight weight1 =
+                new Weight(
+                        1.0,
+                        WeightUnit.KILOGRAM
+                );
+
+        Weight weight2 =
+                new Weight(
+                        1000.0,
+                        WeightUnit.GRAM
+                );
+
+        assertThrows(
+                IllegalArgumentException.class,
+                () -> QuantityMeasurementApp
+                        .demonstrateWeightAddition(
+                                weight1,
+                                weight2,
+                                null
+                        )
+        );
+    }
+
+        // ==================================================
+    // UC9 UPDATE
+    // WEIGHT UNIT ENUM TESTS
+    // ==================================================
+
+    @Test
+    public void testWeightUnit_KilogramConversionFactor() {
+
+        assertEquals(
+                1.0,
+                WeightUnit.KILOGRAM
+                        .getConversionFactor()
+        );
+    }
+
+    @Test
+    public void testWeightUnit_GramConversionFactor() {
+
+        assertEquals(
+                0.001,
+                WeightUnit.GRAM
+                        .getConversionFactor()
+        );
+    }
+
+    @Test
+    public void testWeightUnit_PoundConversionFactor() {
+
+        assertEquals(
+                0.453592,
+                WeightUnit.POUND
+                        .getConversionFactor()
+        );
+    }
+
+    @Test
+    public void testConvertToBaseUnit_Kilogram() {
+
+        assertEquals(
+                1.0,
+                WeightUnit.KILOGRAM
+                        .convertToBaseUnit(
+                                1.0
+                        )
+        );
+    }
+
+    @Test
+    public void testConvertToBaseUnit_Gram() {
+
+        assertEquals(
+                1.0,
+                WeightUnit.GRAM
+                        .convertToBaseUnit(
+                                1000.0
+                        )
+        );
+    }
+
+    @Test
+    public void testConvertToBaseUnit_Pound() {
+
+        assertEquals(
+                0.45,
+                WeightUnit.POUND
+                        .convertToBaseUnit(
+                                1.0
+                        )
+        );
+    }
+
+    @Test
+    public void testConvertFromBaseUnit_Kilogram() {
+
+        assertEquals(
+                1.0,
+                WeightUnit.KILOGRAM
+                        .convertFromBaseUnit(
+                                1.0
+                        )
+        );
+    }
+
+    @Test
+    public void testConvertFromBaseUnit_Gram() {
+
+        assertEquals(
+                1000.0,
+                WeightUnit.GRAM
+                        .convertFromBaseUnit(
+                                1.0
+                        )
+        );
+    }
+
+    @Test
+    public void testConvertFromBaseUnit_Pound() {
+
+        assertEquals(
+                2.20,
+                WeightUnit.POUND
+                        .convertFromBaseUnit(
+                                1.0
+                        )
+        );
+    }
+
+    @Test
+    public void testWeightEqualityDemonstrateMethod() {
+
+        assertTrue(
+                QuantityMeasurementApp
+                        .demonstrateWeightComparison(
+                                1.0,
+                                WeightUnit.KILOGRAM,
+                                1000.0,
+                                WeightUnit.GRAM
+                        )
+        );
+    }
+
+    @Test
+    public void testWeightVsLength_Incompatible() {
+
+        Weight weight =
+                new Weight(
+                        1.0,
+                        WeightUnit.KILOGRAM
+                );
+
+        Length length =
+                new Length(
+                        1.0,
+                        LengthUnit.FEET
+                );
+
+        assertFalse(
+                weight.equals(length)
+        );
+    }
+
+
 }
