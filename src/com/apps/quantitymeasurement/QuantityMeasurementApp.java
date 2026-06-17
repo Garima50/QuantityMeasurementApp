@@ -234,5 +234,48 @@ public class QuantityMeasurementApp {
                         WeightUnit.KILOGRAM
                 )
         );
+
+                System.out.println();
+
+        // UC11 UPDATE
+        // Volume measurement demonstrations
+
+        System.out.println(
+                "===== VOLUME TESTS ====="
+        );
+
+        Quantity<VolumeUnit> litre =
+                new Quantity<>(
+                        1.0,
+                        VolumeUnit.LITRE
+                );
+
+        Quantity<VolumeUnit> millilitre =
+                new Quantity<>(
+                        1000.0,
+                        VolumeUnit.MILLILITRE
+                );
+
+        System.out.println(
+                demonstrateEquality(
+                        litre,
+                        millilitre
+                )
+        );
+
+        System.out.println(
+                demonstrateConversion(
+                        litre,
+                        VolumeUnit.MILLILITRE
+                )
+        );
+
+        System.out.println(
+                demonstrateAddition(
+                        litre,
+                        millilitre,
+                        VolumeUnit.LITRE
+                )
+        );
     }
 }
