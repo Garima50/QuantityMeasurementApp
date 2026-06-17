@@ -201,6 +201,120 @@ public class Quantity<U extends IMeasurable> {
         );
     }
 
+    // UC12 UPDATE
+    // Subtraction result returned in first operand unit
+
+    public Quantity<U> subtract(
+            Quantity<U> quantity
+    ) {
+
+        if (quantity == null) {
+
+            throw new IllegalArgumentException(
+                    "Quantity to subtract cannot be null"
+            );
+        }
+
+        double thisQuantityInBaseUnit =
+                this.convertToBaseUnit();
+
+        double thatQuantityInBaseUnit =
+                quantity.convertToBaseUnit();
+
+        double differenceInBaseUnit =
+                thisQuantityInBaseUnit -
+                thatQuantityInBaseUnit;
+
+        double convertedDifference =
+                unit.convertFromBaseUnit(
+                        differenceInBaseUnit
+                );
+
+        return new Quantity<>(
+                convertedDifference,
+                unit
+        );
+    }
+
+    // UC12 UPDATE
+    // Subtraction with explicit target unit
+
+    public Quantity<U> subtract(
+            Quantity<U> quantity,
+            U targetUnit
+    ) {
+
+        if (quantity == null) {
+
+            throw new IllegalArgumentException(
+                    "Quantity to subtract cannot be null"
+            );
+        }
+
+        if (targetUnit == null) {
+
+            throw new IllegalArgumentException(
+                    "Target unit cannot be null"
+            );
+        }
+
+        double thisQuantityInBaseUnit =
+                this.convertToBaseUnit();
+
+        double thatQuantityInBaseUnit =
+                quantity.convertToBaseUnit();
+
+        double differenceInBaseUnit =
+                thisQuantityInBaseUnit -
+                thatQuantityInBaseUnit;
+
+        double convertedDifference =
+                targetUnit.convertFromBaseUnit(
+                        differenceInBaseUnit
+                );
+
+        return new Quantity<>(
+                convertedDifference,
+                targetUnit
+        );
+    }
+
+    // UC12 UPDATE
+    // Division returns a dimensionless ratio
+
+    public double divide(
+            Quantity<U> quantity
+    ) {
+
+        if (quantity == null) {
+
+            throw new IllegalArgumentException(
+                    "Quantity to divide cannot be null"
+            );
+        }
+
+        double divisor =
+                quantity.convertToBaseUnit();
+
+        if (
+                Double.compare(
+                        divisor,
+                        0.0
+                ) == 0
+        ) {
+
+            throw new ArithmeticException(
+                    "Cannot divide by zero"
+            );
+        }
+
+        double dividend =
+                this.convertToBaseUnit();
+
+        return dividend /
+                divisor;
+    }
+
     @Override
     public String toString() {
 

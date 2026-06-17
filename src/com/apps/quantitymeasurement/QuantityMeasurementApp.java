@@ -153,6 +153,87 @@ public class QuantityMeasurementApp {
         );
     }
 
+        // UC12 UPDATE
+    // Generic subtraction demonstration
+
+    public static <U extends IMeasurable>
+    Quantity<U> demonstrateSubtraction(
+            Quantity<U> quantity1,
+            Quantity<U> quantity2
+    ) {
+
+        if (
+                quantity1 == null
+                || quantity2 == null
+        ) {
+
+            throw new IllegalArgumentException(
+                    "Quantities cannot be null"
+            );
+        }
+
+        return quantity1.subtract(
+                quantity2
+        );
+    }
+
+    // UC12 UPDATE
+    // Generic subtraction with target unit
+
+    public static <U extends IMeasurable>
+    Quantity<U> demonstrateSubtraction(
+            Quantity<U> quantity1,
+            Quantity<U> quantity2,
+            U targetUnit
+    ) {
+
+        if (
+                quantity1 == null
+                || quantity2 == null
+        ) {
+
+            throw new IllegalArgumentException(
+                    "Quantities cannot be null"
+            );
+        }
+
+        if (targetUnit == null) {
+
+            throw new IllegalArgumentException(
+                    "Target unit cannot be null"
+            );
+        }
+
+        return quantity1.subtract(
+                quantity2,
+                targetUnit
+        );
+    }
+
+    // UC12 UPDATE
+    // Generic division demonstration
+
+    public static <U extends IMeasurable>
+    double demonstrateDivision(
+            Quantity<U> quantity1,
+            Quantity<U> quantity2
+    ) {
+
+        if (
+                quantity1 == null
+                || quantity2 == null
+        ) {
+
+            throw new IllegalArgumentException(
+                    "Quantities cannot be null"
+            );
+        }
+
+        return quantity1.divide(
+                quantity2
+        );
+    }
+
     public static void main(
             String[] args
     ) {
@@ -192,6 +273,21 @@ public class QuantityMeasurementApp {
                         foot,
                         inches,
                         LengthUnit.FEET
+                )
+        );
+
+                System.out.println(
+                demonstrateSubtraction(
+                        foot,
+                        inches,
+                        LengthUnit.FEET
+                )
+        );
+
+        System.out.println(
+                demonstrateDivision(
+                        foot,
+                        inches
                 )
         );
 
@@ -235,7 +331,22 @@ public class QuantityMeasurementApp {
                 )
         );
 
-                System.out.println();
+                System.out.println(
+                demonstrateSubtraction(
+                        kilogram,
+                        gram,
+                        WeightUnit.KILOGRAM
+                )
+        );
+
+        System.out.println(
+                demonstrateDivision(
+                        kilogram,
+                        gram
+                )
+        );
+
+        System.out.println();
 
         // UC11 UPDATE
         // Volume measurement demonstrations
@@ -275,6 +386,21 @@ public class QuantityMeasurementApp {
                         litre,
                         millilitre,
                         VolumeUnit.LITRE
+                )
+        );
+
+        System.out.println(
+                demonstrateSubtraction(
+                        litre,
+                        millilitre,
+                        VolumeUnit.LITRE
+                )
+        );
+
+        System.out.println(
+                demonstrateDivision(
+                        litre,
+                        millilitre
                 )
         );
     }

@@ -2984,4 +2984,1643 @@ public void testGenericQuantity_NullUnit() {
         );
     }
 
+        // ==================================================
+    // UC12 UPDATE
+    // LENGTH SUBTRACTION TESTS
+    // ==================================================
+
+    @Test
+    public void testSubtraction_SameUnit_FeetMinusFeet() {
+
+        Quantity<LengthUnit> length1 =
+                new Quantity<>(
+                        10.0,
+                        LengthUnit.FEET
+                );
+
+        Quantity<LengthUnit> length2 =
+                new Quantity<>(
+                        5.0,
+                        LengthUnit.FEET
+                );
+
+        Quantity<LengthUnit> result =
+                QuantityMeasurementApp
+                        .demonstrateSubtraction(
+                                length1,
+                                length2
+                        );
+
+        Quantity<LengthUnit> expected =
+                new Quantity<>(
+                        5.0,
+                        LengthUnit.FEET
+                );
+
+        assertTrue(
+                result.equals(expected)
+        );
+    }
+
+    @Test
+    public void testSubtraction_CrossUnit_FeetMinusInches() {
+
+        Quantity<LengthUnit> feet =
+                new Quantity<>(
+                        10.0,
+                        LengthUnit.FEET
+                );
+
+        Quantity<LengthUnit> inches =
+                new Quantity<>(
+                        6.0,
+                        LengthUnit.INCHES
+                );
+
+        Quantity<LengthUnit> result =
+                QuantityMeasurementApp
+                        .demonstrateSubtraction(
+                                feet,
+                                inches
+                        );
+
+        Quantity<LengthUnit> expected =
+                new Quantity<>(
+                        9.5,
+                        LengthUnit.FEET
+                );
+
+        assertTrue(
+                result.equals(expected)
+        );
+    }
+
+    @Test
+    public void testSubtraction_ExplicitTargetUnit_Inches() {
+
+        Quantity<LengthUnit> feet =
+                new Quantity<>(
+                        10.0,
+                        LengthUnit.FEET
+                );
+
+        Quantity<LengthUnit> inches =
+                new Quantity<>(
+                        6.0,
+                        LengthUnit.INCHES
+                );
+
+        Quantity<LengthUnit> result =
+                QuantityMeasurementApp
+                        .demonstrateSubtraction(
+                                feet,
+                                inches,
+                                LengthUnit.INCHES
+                        );
+
+        Quantity<LengthUnit> expected =
+                new Quantity<>(
+                        114.0,
+                        LengthUnit.INCHES
+                );
+
+        assertTrue(
+                result.equals(expected)
+        );
+    }
+
+    @Test
+    public void testSubtraction_ResultingInNegative() {
+
+        Quantity<LengthUnit> length1 =
+                new Quantity<>(
+                        5.0,
+                        LengthUnit.FEET
+                );
+
+        Quantity<LengthUnit> length2 =
+                new Quantity<>(
+                        10.0,
+                        LengthUnit.FEET
+                );
+
+        Quantity<LengthUnit> result =
+                length1.subtract(
+                        length2
+                );
+
+        Quantity<LengthUnit> expected =
+                new Quantity<>(
+                        -5.0,
+                        LengthUnit.FEET
+                );
+
+        assertTrue(
+                result.equals(expected)
+        );
+    }
+
+    @Test
+    public void testSubtraction_ResultingInZero() {
+
+        Quantity<LengthUnit> feet =
+                new Quantity<>(
+                        10.0,
+                        LengthUnit.FEET
+                );
+
+        Quantity<LengthUnit> inches =
+                new Quantity<>(
+                        120.0,
+                        LengthUnit.INCHES
+                );
+
+        Quantity<LengthUnit> result =
+                feet.subtract(
+                        inches
+                );
+
+        Quantity<LengthUnit> expected =
+                new Quantity<>(
+                        0.0,
+                        LengthUnit.FEET
+                );
+
+        assertTrue(
+                result.equals(expected)
+        );
+    }
+
+    @Test
+    public void testSubtraction_WithZeroOperand() {
+
+        Quantity<LengthUnit> feet =
+                new Quantity<>(
+                        5.0,
+                        LengthUnit.FEET
+                );
+
+        Quantity<LengthUnit> zero =
+                new Quantity<>(
+                        0.0,
+                        LengthUnit.INCHES
+                );
+
+        Quantity<LengthUnit> result =
+                feet.subtract(
+                        zero
+                );
+
+        assertTrue(
+                result.equals(
+                        new Quantity<>(
+                                5.0,
+                                LengthUnit.FEET
+                        )
+                )
+        );
+    }
+
+    @Test
+    public void testSubtraction_WithNegativeValues() {
+
+        Quantity<LengthUnit> length1 =
+                new Quantity<>(
+                        5.0,
+                        LengthUnit.FEET
+                );
+
+        Quantity<LengthUnit> length2 =
+                new Quantity<>(
+                        -2.0,
+                        LengthUnit.FEET
+                );
+
+        Quantity<LengthUnit> result =
+                length1.subtract(
+                        length2
+                );
+
+        assertTrue(
+                result.equals(
+                        new Quantity<>(
+                                7.0,
+                                LengthUnit.FEET
+                        )
+                )
+        );
+    }
+
+    @Test
+    public void testSubtraction_NonCommutative() {
+
+        Quantity<LengthUnit> length1 =
+                new Quantity<>(
+                        10.0,
+                        LengthUnit.FEET
+                );
+
+        Quantity<LengthUnit> length2 =
+                new Quantity<>(
+                        5.0,
+                        LengthUnit.FEET
+                );
+
+        assertFalse(
+                length1.subtract(
+                        length2
+                ).equals(
+                        length2.subtract(
+                                length1
+                        )
+                )
+        );
+    }
+
+    @Test
+    public void testSubtraction_NullOperand() {
+
+        Quantity<LengthUnit> length =
+                new Quantity<>(
+                        10.0,
+                        LengthUnit.FEET
+                );
+
+        assertThrows(
+                IllegalArgumentException.class,
+                () -> length.subtract(null)
+        );
+    }
+
+    @Test
+    public void testSubtraction_NullTargetUnit() {
+
+        Quantity<LengthUnit> length1 =
+                new Quantity<>(
+                        10.0,
+                        LengthUnit.FEET
+                );
+
+        Quantity<LengthUnit> length2 =
+                new Quantity<>(
+                        5.0,
+                        LengthUnit.FEET
+                );
+
+        assertThrows(
+                IllegalArgumentException.class,
+                () -> length1.subtract(
+                        length2,
+                        null
+                )
+        );
+    }
+
+        // ==================================================
+    // UC12 UPDATE
+    // LENGTH DIVISION TESTS
+    // ==================================================
+
+    @Test
+    public void testDivision_SameUnit_FeetDividedByFeet() {
+
+        Quantity<LengthUnit> length1 =
+                new Quantity<>(
+                        10.0,
+                        LengthUnit.FEET
+                );
+
+        Quantity<LengthUnit> length2 =
+                new Quantity<>(
+                        2.0,
+                        LengthUnit.FEET
+                );
+
+        assertEquals(
+                5.0,
+                length1.divide(length2)
+        );
+    }
+
+    @Test
+    public void testDivision_CrossUnit_FeetDividedByInches() {
+
+        Quantity<LengthUnit> inches =
+                new Quantity<>(
+                        24.0,
+                        LengthUnit.INCHES
+                );
+
+        Quantity<LengthUnit> feet =
+                new Quantity<>(
+                        2.0,
+                        LengthUnit.FEET
+                );
+
+        assertEquals(
+                1.0,
+                inches.divide(feet)
+        );
+    }
+
+    @Test
+    public void testDivision_RatioGreaterThanOne() {
+
+        Quantity<LengthUnit> length1 =
+                new Quantity<>(
+                        10.0,
+                        LengthUnit.FEET
+                );
+
+        Quantity<LengthUnit> length2 =
+                new Quantity<>(
+                        2.0,
+                        LengthUnit.FEET
+                );
+
+        assertEquals(
+                5.0,
+                length1.divide(length2)
+        );
+    }
+
+    @Test
+    public void testDivision_RatioLessThanOne() {
+
+        Quantity<LengthUnit> length1 =
+                new Quantity<>(
+                        5.0,
+                        LengthUnit.FEET
+                );
+
+        Quantity<LengthUnit> length2 =
+                new Quantity<>(
+                        10.0,
+                        LengthUnit.FEET
+                );
+
+        assertEquals(
+                0.5,
+                length1.divide(length2)
+        );
+    }
+
+    @Test
+    public void testDivision_RatioEqualToOne() {
+
+        Quantity<LengthUnit> length1 =
+                new Quantity<>(
+                        10.0,
+                        LengthUnit.FEET
+                );
+
+        Quantity<LengthUnit> length2 =
+                new Quantity<>(
+                        120.0,
+                        LengthUnit.INCHES
+                );
+
+        assertEquals(
+                1.0,
+                length1.divide(length2)
+        );
+    }
+
+    @Test
+    public void testDivision_NonCommutative() {
+
+        Quantity<LengthUnit> length1 =
+                new Quantity<>(
+                        10.0,
+                        LengthUnit.FEET
+                );
+
+        Quantity<LengthUnit> length2 =
+                new Quantity<>(
+                        5.0,
+                        LengthUnit.FEET
+                );
+
+        assertNotEquals(
+                length1.divide(length2),
+                length2.divide(length1)
+        );
+    }
+
+    @Test
+    public void testDivision_ByZero() {
+
+        Quantity<LengthUnit> length =
+                new Quantity<>(
+                        10.0,
+                        LengthUnit.FEET
+                );
+
+        Quantity<LengthUnit> zero =
+                new Quantity<>(
+                        0.0,
+                        LengthUnit.FEET
+                );
+
+        assertThrows(
+                ArithmeticException.class,
+                () -> length.divide(zero)
+        );
+    }
+
+    @Test
+    public void testDivision_WithLargeRatio() {
+
+        Quantity<LengthUnit> large =
+                new Quantity<>(
+                        1000000.0,
+                        LengthUnit.FEET
+                );
+
+        Quantity<LengthUnit> small =
+                new Quantity<>(
+                        1.0,
+                        LengthUnit.FEET
+                );
+
+        assertEquals(
+                1000000.0,
+                large.divide(small)
+        );
+    }
+
+    @Test
+    public void testDivision_WithSmallRatio() {
+
+        Quantity<LengthUnit> small =
+                new Quantity<>(
+                        1.0,
+                        LengthUnit.FEET
+                );
+
+        Quantity<LengthUnit> large =
+                new Quantity<>(
+                        1000000.0,
+                        LengthUnit.FEET
+                );
+
+        assertEquals(
+                0.000001,
+                small.divide(large)
+        );
+    }
+
+    @Test
+    public void testDivision_NullOperand() {
+
+        Quantity<LengthUnit> length =
+                new Quantity<>(
+                        10.0,
+                        LengthUnit.FEET
+                );
+
+        assertThrows(
+                IllegalArgumentException.class,
+                () -> length.divide(null)
+        );
+    }
+
+    @Test
+    public void testLengthDivisionDemonstrateMethod() {
+
+        Quantity<LengthUnit> length1 =
+                new Quantity<>(
+                        24.0,
+                        LengthUnit.INCHES
+                );
+
+        Quantity<LengthUnit> length2 =
+                new Quantity<>(
+                        2.0,
+                        LengthUnit.FEET
+                );
+
+        assertEquals(
+                1.0,
+                QuantityMeasurementApp
+                        .demonstrateDivision(
+                                length1,
+                                length2
+                        )
+        );
+    }
+
+        // ==================================================
+    // UC12 UPDATE
+    // WEIGHT SUBTRACTION TESTS
+    // ==================================================
+
+    @Test
+    public void testSubtraction_SameUnit_KilogramMinusKilogram() {
+
+        Quantity<WeightUnit> weight1 =
+                new Quantity<>(
+                        10.0,
+                        WeightUnit.KILOGRAM
+                );
+
+        Quantity<WeightUnit> weight2 =
+                new Quantity<>(
+                        5.0,
+                        WeightUnit.KILOGRAM
+                );
+
+        Quantity<WeightUnit> result =
+                QuantityMeasurementApp
+                        .demonstrateSubtraction(
+                                weight1,
+                                weight2
+                        );
+
+        Quantity<WeightUnit> expected =
+                new Quantity<>(
+                        5.0,
+                        WeightUnit.KILOGRAM
+                );
+
+        assertTrue(
+                result.equals(expected)
+        );
+    }
+
+    @Test
+    public void testSubtraction_CrossUnit_KilogramMinusGram() {
+
+        Quantity<WeightUnit> kilogram =
+                new Quantity<>(
+                        10.0,
+                        WeightUnit.KILOGRAM
+                );
+
+        Quantity<WeightUnit> gram =
+                new Quantity<>(
+                        5000.0,
+                        WeightUnit.GRAM
+                );
+
+        Quantity<WeightUnit> result =
+                QuantityMeasurementApp
+                        .demonstrateSubtraction(
+                                kilogram,
+                                gram
+                        );
+
+        Quantity<WeightUnit> expected =
+                new Quantity<>(
+                        5.0,
+                        WeightUnit.KILOGRAM
+                );
+
+        assertTrue(
+                result.equals(expected)
+        );
+    }
+
+    @Test
+    public void testSubtraction_ExplicitTargetUnit_Gram() {
+
+        Quantity<WeightUnit> kilogram =
+                new Quantity<>(
+                        10.0,
+                        WeightUnit.KILOGRAM
+                );
+
+        Quantity<WeightUnit> gram =
+                new Quantity<>(
+                        5000.0,
+                        WeightUnit.GRAM
+                );
+
+        Quantity<WeightUnit> result =
+                QuantityMeasurementApp
+                        .demonstrateSubtraction(
+                                kilogram,
+                                gram,
+                                WeightUnit.GRAM
+                        );
+
+        Quantity<WeightUnit> expected =
+                new Quantity<>(
+                        5000.0,
+                        WeightUnit.GRAM
+                );
+
+        assertTrue(
+                result.equals(expected)
+        );
+    }
+
+    @Test
+    public void testSubtraction_WeightResultingInNegative() {
+
+        Quantity<WeightUnit> weight1 =
+                new Quantity<>(
+                        2.0,
+                        WeightUnit.KILOGRAM
+                );
+
+        Quantity<WeightUnit> weight2 =
+                new Quantity<>(
+                        5.0,
+                        WeightUnit.KILOGRAM
+                );
+
+        Quantity<WeightUnit> result =
+                weight1.subtract(
+                        weight2
+                );
+
+        Quantity<WeightUnit> expected =
+                new Quantity<>(
+                        -3.0,
+                        WeightUnit.KILOGRAM
+                );
+
+        assertTrue(
+                result.equals(expected)
+        );
+    }
+
+    @Test
+    public void testSubtraction_WeightResultingInZero() {
+
+        Quantity<WeightUnit> kilogram =
+                new Quantity<>(
+                        1.0,
+                        WeightUnit.KILOGRAM
+                );
+
+        Quantity<WeightUnit> gram =
+                new Quantity<>(
+                        1000.0,
+                        WeightUnit.GRAM
+                );
+
+        Quantity<WeightUnit> result =
+                kilogram.subtract(
+                        gram
+                );
+
+        Quantity<WeightUnit> expected =
+                new Quantity<>(
+                        0.0,
+                        WeightUnit.KILOGRAM
+                );
+
+        assertTrue(
+                result.equals(expected)
+        );
+    }
+
+    @Test
+    public void testWeightSubtraction_WithZeroOperand() {
+
+        Quantity<WeightUnit> kilogram =
+                new Quantity<>(
+                        5.0,
+                        WeightUnit.KILOGRAM
+                );
+
+        Quantity<WeightUnit> zero =
+                new Quantity<>(
+                        0.0,
+                        WeightUnit.GRAM
+                );
+
+        Quantity<WeightUnit> result =
+                kilogram.subtract(
+                        zero
+                );
+
+        assertTrue(
+                result.equals(
+                        new Quantity<>(
+                                5.0,
+                                WeightUnit.KILOGRAM
+                        )
+                )
+        );
+    }
+
+    @Test
+    public void testWeightSubtraction_WithNegativeValues() {
+
+        Quantity<WeightUnit> weight1 =
+                new Quantity<>(
+                        5.0,
+                        WeightUnit.KILOGRAM
+                );
+
+        Quantity<WeightUnit> weight2 =
+                new Quantity<>(
+                        -2.0,
+                        WeightUnit.KILOGRAM
+                );
+
+        Quantity<WeightUnit> result =
+                weight1.subtract(
+                        weight2
+                );
+
+        assertTrue(
+                result.equals(
+                        new Quantity<>(
+                                7.0,
+                                WeightUnit.KILOGRAM
+                        )
+                )
+        );
+    }
+
+    @Test
+    public void testWeightSubtraction_NonCommutative() {
+
+        Quantity<WeightUnit> weight1 =
+                new Quantity<>(
+                        10.0,
+                        WeightUnit.KILOGRAM
+                );
+
+        Quantity<WeightUnit> weight2 =
+                new Quantity<>(
+                        5.0,
+                        WeightUnit.KILOGRAM
+                );
+
+        assertFalse(
+                weight1.subtract(
+                        weight2
+                ).equals(
+                        weight2.subtract(
+                                weight1
+                        )
+                )
+        );
+    }
+
+    @Test
+    public void testWeightSubtraction_NullOperand() {
+
+        Quantity<WeightUnit> weight =
+                new Quantity<>(
+                        10.0,
+                        WeightUnit.KILOGRAM
+                );
+
+        assertThrows(
+                IllegalArgumentException.class,
+                () -> weight.subtract(null)
+        );
+    }
+
+    @Test
+    public void testWeightSubtraction_NullTargetUnit() {
+
+        Quantity<WeightUnit> weight1 =
+                new Quantity<>(
+                        10.0,
+                        WeightUnit.KILOGRAM
+                );
+
+        Quantity<WeightUnit> weight2 =
+                new Quantity<>(
+                        5.0,
+                        WeightUnit.KILOGRAM
+                );
+
+        assertThrows(
+                IllegalArgumentException.class,
+                () -> weight1.subtract(
+                        weight2,
+                        null
+                )
+        );
+    }
+
+
+        // ==================================================
+    // UC12 UPDATE
+    // WEIGHT DIVISION TESTS
+    // ==================================================
+
+    @Test
+    public void testDivision_SameUnit_KilogramDividedByKilogram() {
+
+        Quantity<WeightUnit> weight1 =
+                new Quantity<>(
+                        10.0,
+                        WeightUnit.KILOGRAM
+                );
+
+        Quantity<WeightUnit> weight2 =
+                new Quantity<>(
+                        5.0,
+                        WeightUnit.KILOGRAM
+                );
+
+        assertEquals(
+                2.0,
+                weight1.divide(weight2)
+        );
+    }
+
+    @Test
+    public void testDivision_CrossUnit_KilogramDividedByGram() {
+
+        Quantity<WeightUnit> kilogram =
+                new Quantity<>(
+                        2.0,
+                        WeightUnit.KILOGRAM
+                );
+
+        Quantity<WeightUnit> gram =
+                new Quantity<>(
+                        2000.0,
+                        WeightUnit.GRAM
+                );
+
+        assertEquals(
+                1.0,
+                kilogram.divide(gram)
+        );
+    }
+
+    @Test
+    public void testDivision_WeightRatioGreaterThanOne() {
+
+        Quantity<WeightUnit> weight1 =
+                new Quantity<>(
+                        10.0,
+                        WeightUnit.KILOGRAM
+                );
+
+        Quantity<WeightUnit> weight2 =
+                new Quantity<>(
+                        2.0,
+                        WeightUnit.KILOGRAM
+                );
+
+        assertEquals(
+                5.0,
+                weight1.divide(weight2)
+        );
+    }
+
+    @Test
+    public void testDivision_WeightRatioLessThanOne() {
+
+        Quantity<WeightUnit> weight1 =
+                new Quantity<>(
+                        5.0,
+                        WeightUnit.KILOGRAM
+                );
+
+        Quantity<WeightUnit> weight2 =
+                new Quantity<>(
+                        10.0,
+                        WeightUnit.KILOGRAM
+                );
+
+        assertEquals(
+                0.5,
+                weight1.divide(weight2)
+        );
+    }
+
+    @Test
+    public void testDivision_WeightRatioEqualToOne() {
+
+        Quantity<WeightUnit> kilogram =
+                new Quantity<>(
+                        1.0,
+                        WeightUnit.KILOGRAM
+                );
+
+        Quantity<WeightUnit> gram =
+                new Quantity<>(
+                        1000.0,
+                        WeightUnit.GRAM
+                );
+
+        assertEquals(
+                1.0,
+                kilogram.divide(gram)
+        );
+    }
+
+    @Test
+    public void testDivision_WeightNonCommutative() {
+
+        Quantity<WeightUnit> weight1 =
+                new Quantity<>(
+                        10.0,
+                        WeightUnit.KILOGRAM
+                );
+
+        Quantity<WeightUnit> weight2 =
+                new Quantity<>(
+                        5.0,
+                        WeightUnit.KILOGRAM
+                );
+
+        assertNotEquals(
+                weight1.divide(weight2),
+                weight2.divide(weight1)
+        );
+    }
+
+    @Test
+    public void testDivision_WeightByZero() {
+
+        Quantity<WeightUnit> weight =
+                new Quantity<>(
+                        10.0,
+                        WeightUnit.KILOGRAM
+                );
+
+        Quantity<WeightUnit> zero =
+                new Quantity<>(
+                        0.0,
+                        WeightUnit.KILOGRAM
+                );
+
+        assertThrows(
+                ArithmeticException.class,
+                () -> weight.divide(zero)
+        );
+    }
+
+    @Test
+    public void testDivision_WeightLargeRatio() {
+
+        Quantity<WeightUnit> large =
+                new Quantity<>(
+                        1000000.0,
+                        WeightUnit.KILOGRAM
+                );
+
+        Quantity<WeightUnit> small =
+                new Quantity<>(
+                        1.0,
+                        WeightUnit.KILOGRAM
+                );
+
+        assertEquals(
+                1000000.0,
+                large.divide(small)
+        );
+    }
+
+    @Test
+    public void testDivision_WeightSmallRatio() {
+
+        Quantity<WeightUnit> small =
+                new Quantity<>(
+                        1.0,
+                        WeightUnit.KILOGRAM
+                );
+
+        Quantity<WeightUnit> large =
+                new Quantity<>(
+                        1000000.0,
+                        WeightUnit.KILOGRAM
+                );
+
+        assertEquals(
+                0.000001,
+                small.divide(large)
+        );
+    }
+
+    @Test
+    public void testDivision_WeightNullOperand() {
+
+        Quantity<WeightUnit> weight =
+                new Quantity<>(
+                        10.0,
+                        WeightUnit.KILOGRAM
+                );
+
+        assertThrows(
+                IllegalArgumentException.class,
+                () -> weight.divide(null)
+        );
+    }
+
+    @Test
+    public void testWeightDivisionDemonstrateMethod() {
+
+        Quantity<WeightUnit> kilogram =
+                new Quantity<>(
+                        2.0,
+                        WeightUnit.KILOGRAM
+                );
+
+        Quantity<WeightUnit> gram =
+                new Quantity<>(
+                        2000.0,
+                        WeightUnit.GRAM
+                );
+
+        assertEquals(
+                1.0,
+                QuantityMeasurementApp
+                        .demonstrateDivision(
+                                kilogram,
+                                gram
+                        )
+        );
+    }
+
+        // ==================================================
+    // UC12 UPDATE
+    // VOLUME SUBTRACTION TESTS
+    // ==================================================
+
+    @Test
+    public void testSubtraction_SameUnit_LitreMinusLitre() {
+
+        Quantity<VolumeUnit> volume1 =
+                new Quantity<>(
+                        10.0,
+                        VolumeUnit.LITRE
+                );
+
+        Quantity<VolumeUnit> volume2 =
+                new Quantity<>(
+                        3.0,
+                        VolumeUnit.LITRE
+                );
+
+        Quantity<VolumeUnit> result =
+                QuantityMeasurementApp
+                        .demonstrateSubtraction(
+                                volume1,
+                                volume2
+                        );
+
+        Quantity<VolumeUnit> expected =
+                new Quantity<>(
+                        7.0,
+                        VolumeUnit.LITRE
+                );
+
+        assertTrue(
+                result.equals(expected)
+        );
+    }
+
+    @Test
+    public void testSubtraction_CrossUnit_LitreMinusMillilitre() {
+
+        Quantity<VolumeUnit> litre =
+                new Quantity<>(
+                        5.0,
+                        VolumeUnit.LITRE
+                );
+
+        Quantity<VolumeUnit> millilitre =
+                new Quantity<>(
+                        500.0,
+                        VolumeUnit.MILLILITRE
+                );
+
+        Quantity<VolumeUnit> result =
+                QuantityMeasurementApp
+                        .demonstrateSubtraction(
+                                litre,
+                                millilitre
+                        );
+
+        Quantity<VolumeUnit> expected =
+                new Quantity<>(
+                        4.5,
+                        VolumeUnit.LITRE
+                );
+
+        assertTrue(
+                result.equals(expected)
+        );
+    }
+
+    @Test
+    public void testSubtraction_ExplicitTargetUnit_Millilitre() {
+
+        Quantity<VolumeUnit> litre1 =
+                new Quantity<>(
+                        5.0,
+                        VolumeUnit.LITRE
+                );
+
+        Quantity<VolumeUnit> litre2 =
+                new Quantity<>(
+                        2.0,
+                        VolumeUnit.LITRE
+                );
+
+        Quantity<VolumeUnit> result =
+                QuantityMeasurementApp
+                        .demonstrateSubtraction(
+                                litre1,
+                                litre2,
+                                VolumeUnit.MILLILITRE
+                        );
+
+        Quantity<VolumeUnit> expected =
+                new Quantity<>(
+                        3000.0,
+                        VolumeUnit.MILLILITRE
+                );
+
+        assertTrue(
+                result.equals(expected)
+        );
+    }
+
+    @Test
+    public void testSubtraction_VolumeResultingInNegative() {
+
+        Quantity<VolumeUnit> volume1 =
+                new Quantity<>(
+                        2.0,
+                        VolumeUnit.LITRE
+                );
+
+        Quantity<VolumeUnit> volume2 =
+                new Quantity<>(
+                        5.0,
+                        VolumeUnit.LITRE
+                );
+
+        Quantity<VolumeUnit> result =
+                volume1.subtract(
+                        volume2
+                );
+
+        Quantity<VolumeUnit> expected =
+                new Quantity<>(
+                        -3.0,
+                        VolumeUnit.LITRE
+                );
+
+        assertTrue(
+                result.equals(expected)
+        );
+    }
+
+    @Test
+    public void testSubtraction_VolumeResultingInZero() {
+
+        Quantity<VolumeUnit> litre =
+                new Quantity<>(
+                        1.0,
+                        VolumeUnit.LITRE
+                );
+
+        Quantity<VolumeUnit> millilitre =
+                new Quantity<>(
+                        1000.0,
+                        VolumeUnit.MILLILITRE
+                );
+
+        Quantity<VolumeUnit> result =
+                litre.subtract(
+                        millilitre
+                );
+
+        Quantity<VolumeUnit> expected =
+                new Quantity<>(
+                        0.0,
+                        VolumeUnit.LITRE
+                );
+
+        assertTrue(
+                result.equals(expected)
+        );
+    }
+
+    @Test
+    public void testVolumeSubtraction_WithZeroOperand() {
+
+        Quantity<VolumeUnit> litre =
+                new Quantity<>(
+                        5.0,
+                        VolumeUnit.LITRE
+                );
+
+        Quantity<VolumeUnit> zero =
+                new Quantity<>(
+                        0.0,
+                        VolumeUnit.MILLILITRE
+                );
+
+        Quantity<VolumeUnit> result =
+                litre.subtract(
+                        zero
+                );
+
+        assertTrue(
+                result.equals(
+                        new Quantity<>(
+                                5.0,
+                                VolumeUnit.LITRE
+                        )
+                )
+        );
+    }
+
+    @Test
+    public void testVolumeSubtraction_WithNegativeValues() {
+
+        Quantity<VolumeUnit> volume1 =
+                new Quantity<>(
+                        5.0,
+                        VolumeUnit.LITRE
+                );
+
+        Quantity<VolumeUnit> volume2 =
+                new Quantity<>(
+                        -2.0,
+                        VolumeUnit.LITRE
+                );
+
+        Quantity<VolumeUnit> result =
+                volume1.subtract(
+                        volume2
+                );
+
+        assertTrue(
+                result.equals(
+                        new Quantity<>(
+                                7.0,
+                                VolumeUnit.LITRE
+                        )
+                )
+        );
+    }
+
+    @Test
+    public void testVolumeSubtraction_NonCommutative() {
+
+        Quantity<VolumeUnit> volume1 =
+                new Quantity<>(
+                        10.0,
+                        VolumeUnit.LITRE
+                );
+
+        Quantity<VolumeUnit> volume2 =
+                new Quantity<>(
+                        5.0,
+                        VolumeUnit.LITRE
+                );
+
+        assertFalse(
+                volume1.subtract(
+                        volume2
+                ).equals(
+                        volume2.subtract(
+                                volume1
+                        )
+                )
+        );
+    }
+
+    @Test
+    public void testVolumeSubtraction_NullOperand() {
+
+        Quantity<VolumeUnit> volume =
+                new Quantity<>(
+                        10.0,
+                        VolumeUnit.LITRE
+                );
+
+        assertThrows(
+                IllegalArgumentException.class,
+                () -> volume.subtract(null)
+        );
+    }
+
+    @Test
+    public void testVolumeSubtraction_NullTargetUnit() {
+
+        Quantity<VolumeUnit> volume1 =
+                new Quantity<>(
+                        10.0,
+                        VolumeUnit.LITRE
+                );
+
+        Quantity<VolumeUnit> volume2 =
+                new Quantity<>(
+                        5.0,
+                        VolumeUnit.LITRE
+                );
+
+        assertThrows(
+                IllegalArgumentException.class,
+                () -> volume1.subtract(
+                        volume2,
+                        null
+                )
+        );
+    }
+
+
+        // ==================================================
+    // UC12 UPDATE
+    // VOLUME DIVISION TESTS
+    // ==================================================
+
+    @Test
+    public void testDivision_SameUnit_LitreDividedByLitre() {
+
+        Quantity<VolumeUnit> volume1 =
+                new Quantity<>(
+                        10.0,
+                        VolumeUnit.LITRE
+                );
+
+        Quantity<VolumeUnit> volume2 =
+                new Quantity<>(
+                        5.0,
+                        VolumeUnit.LITRE
+                );
+
+        assertEquals(
+                2.0,
+                volume1.divide(volume2)
+        );
+    }
+
+    @Test
+    public void testDivision_CrossUnit_LitreDividedByMillilitre() {
+
+        Quantity<VolumeUnit> litre =
+                new Quantity<>(
+                        1.0,
+                        VolumeUnit.LITRE
+                );
+
+        Quantity<VolumeUnit> millilitre =
+                new Quantity<>(
+                        1000.0,
+                        VolumeUnit.MILLILITRE
+                );
+
+        assertEquals(
+                1.0,
+                litre.divide(millilitre)
+        );
+    }
+
+    @Test
+    public void testDivision_VolumeRatioGreaterThanOne() {
+
+        Quantity<VolumeUnit> volume1 =
+                new Quantity<>(
+                        10.0,
+                        VolumeUnit.LITRE
+                );
+
+        Quantity<VolumeUnit> volume2 =
+                new Quantity<>(
+                        2.0,
+                        VolumeUnit.LITRE
+                );
+
+        assertEquals(
+                5.0,
+                volume1.divide(volume2)
+        );
+    }
+
+    @Test
+    public void testDivision_VolumeRatioLessThanOne() {
+
+        Quantity<VolumeUnit> volume1 =
+                new Quantity<>(
+                        5.0,
+                        VolumeUnit.LITRE
+                );
+
+        Quantity<VolumeUnit> volume2 =
+                new Quantity<>(
+                        10.0,
+                        VolumeUnit.LITRE
+                );
+
+        assertEquals(
+                0.5,
+                volume1.divide(volume2)
+        );
+    }
+
+    @Test
+    public void testDivision_VolumeRatioEqualToOne() {
+
+        Quantity<VolumeUnit> litre =
+                new Quantity<>(
+                        1.0,
+                        VolumeUnit.LITRE
+                );
+
+        Quantity<VolumeUnit> millilitre =
+                new Quantity<>(
+                        1000.0,
+                        VolumeUnit.MILLILITRE
+                );
+
+        assertEquals(
+                1.0,
+                litre.divide(millilitre)
+        );
+    }
+
+    @Test
+    public void testDivision_VolumeNonCommutative() {
+
+        Quantity<VolumeUnit> volume1 =
+                new Quantity<>(
+                        10.0,
+                        VolumeUnit.LITRE
+                );
+
+        Quantity<VolumeUnit> volume2 =
+                new Quantity<>(
+                        5.0,
+                        VolumeUnit.LITRE
+                );
+
+        assertNotEquals(
+                volume1.divide(volume2),
+                volume2.divide(volume1)
+        );
+    }
+
+    @Test
+    public void testDivision_VolumeByZero() {
+
+        Quantity<VolumeUnit> volume =
+                new Quantity<>(
+                        10.0,
+                        VolumeUnit.LITRE
+                );
+
+        Quantity<VolumeUnit> zero =
+                new Quantity<>(
+                        0.0,
+                        VolumeUnit.LITRE
+                );
+
+        assertThrows(
+                ArithmeticException.class,
+                () -> volume.divide(zero)
+        );
+    }
+
+    @Test
+    public void testDivision_VolumeLargeRatio() {
+
+        Quantity<VolumeUnit> large =
+                new Quantity<>(
+                        1000000.0,
+                        VolumeUnit.LITRE
+                );
+
+        Quantity<VolumeUnit> small =
+                new Quantity<>(
+                        1.0,
+                        VolumeUnit.LITRE
+                );
+
+        assertEquals(
+                1000000.0,
+                large.divide(small)
+        );
+    }
+
+    @Test
+    public void testDivision_VolumeSmallRatio() {
+
+        Quantity<VolumeUnit> small =
+                new Quantity<>(
+                        1.0,
+                        VolumeUnit.LITRE
+                );
+
+        Quantity<VolumeUnit> large =
+                new Quantity<>(
+                        1000000.0,
+                        VolumeUnit.LITRE
+                );
+
+        assertEquals(
+                0.000001,
+                small.divide(large)
+        );
+    }
+
+    @Test
+    public void testDivision_VolumeNullOperand() {
+
+        Quantity<VolumeUnit> volume =
+                new Quantity<>(
+                        10.0,
+                        VolumeUnit.LITRE
+                );
+
+        assertThrows(
+                IllegalArgumentException.class,
+                () -> volume.divide(null)
+        );
+    }
+
+    @Test
+    public void testVolumeDivisionDemonstrateMethod() {
+
+        Quantity<VolumeUnit> litre =
+                new Quantity<>(
+                        1.0,
+                        VolumeUnit.LITRE
+                );
+
+        Quantity<VolumeUnit> millilitre =
+                new Quantity<>(
+                        1000.0,
+                        VolumeUnit.MILLILITRE
+                );
+
+        assertEquals(
+                1.0,
+                QuantityMeasurementApp
+                        .demonstrateDivision(
+                                litre,
+                                millilitre
+                        )
+        );
+    }
+
+    @Test
+    public void testSubtractionAddition_Inverse() {
+
+        Quantity<VolumeUnit> volume1 =
+                new Quantity<>(
+                        5.0,
+                        VolumeUnit.LITRE
+                );
+
+        Quantity<VolumeUnit> volume2 =
+                new Quantity<>(
+                        2.0,
+                        VolumeUnit.LITRE
+                );
+
+        Quantity<VolumeUnit> result =
+                volume1.add(
+                        volume2
+                ).subtract(
+                        volume2
+                );
+
+        assertTrue(
+                result.equals(volume1)
+        );
+    }
+
+    @Test
+    public void testSubtraction_ChainedOperations() {
+
+        Quantity<VolumeUnit> volume =
+                new Quantity<>(
+                        10.0,
+                        VolumeUnit.LITRE
+                );
+
+        Quantity<VolumeUnit> result =
+                volume.subtract(
+                        new Quantity<>(
+                                2.0,
+                                VolumeUnit.LITRE
+                        )
+                ).subtract(
+                        new Quantity<>(
+                                1.0,
+                                VolumeUnit.LITRE
+                        )
+                );
+
+        assertTrue(
+                result.equals(
+                        new Quantity<>(
+                                7.0,
+                                VolumeUnit.LITRE
+                        )
+                )
+        );
+    }
+
 }
