@@ -1,6 +1,6 @@
 package com.apps.quantitymeasurement;
 
-public enum LengthUnit {
+public enum LengthUnit implements IMeasurable {
 
     FEET(12.0),
     INCHES(1.0),
@@ -9,17 +9,24 @@ public enum LengthUnit {
 
     private final double conversionFactor;
 
-    LengthUnit(double conversionFactor) {
-        this.conversionFactor = conversionFactor;
+    LengthUnit(
+            double conversionFactor
+    ) {
+
+        this.conversionFactor =
+                conversionFactor;
     }
 
+    @Override
     public double getConversionFactor() {
+
         return conversionFactor;
     }
 
-    // UC8 UPDATE
-    // Convert value in this unit to base unit (inches)
+    // UC10 UPDATE
+    // Implement IMeasurable contract for length units
 
+    @Override
     public double convertToBaseUnit(
             double value
     ) {
@@ -32,9 +39,10 @@ public enum LengthUnit {
         ) / 100.0;
     }
 
-    // UC8 UPDATE
-    // Convert base unit (inches) to this unit
+    // UC10 UPDATE
+    // Implement IMeasurable contract for length units
 
+    @Override
     public double convertFromBaseUnit(
             double baseValue
     ) {
@@ -45,5 +53,24 @@ public enum LengthUnit {
         return Math.round(
                 convertedValue * 100.0
         ) / 100.0;
+    }
+
+    public static void main(
+            String[] args
+    ) {
+
+        System.out.println(
+                "1 FOOT in inches = "
+                + FEET.convertToBaseUnit(
+                        1.0
+                )
+        );
+
+        System.out.println(
+                "12 INCHES in feet = "
+                + FEET.convertFromBaseUnit(
+                        12.0
+                )
+        );
     }
 }

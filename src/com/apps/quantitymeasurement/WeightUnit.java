@@ -1,9 +1,9 @@
 package com.apps.quantitymeasurement;
 
-public enum WeightUnit {
+public enum WeightUnit implements IMeasurable {
 
-    // UC9 UPDATE
-    // Weight units with conversion factor relative to base unit (kilogram)
+    // UC10 UPDATE
+    // Implement IMeasurable for generic quantity support
 
     KILOGRAM(1.0),
     GRAM(0.001),
@@ -11,17 +11,24 @@ public enum WeightUnit {
 
     private final double conversionFactor;
 
-    WeightUnit(double conversionFactor) {
-        this.conversionFactor = conversionFactor;
+    WeightUnit(
+            double conversionFactor
+    ) {
+
+        this.conversionFactor =
+                conversionFactor;
     }
 
+    @Override
     public double getConversionFactor() {
+
         return conversionFactor;
     }
 
-    // UC9 UPDATE
-    // Convert value in this unit to base unit (kilogram)
+    // UC10 UPDATE
+    // Implement IMeasurable contract for weight units
 
+    @Override
     public double convertToBaseUnit(
             double value
     ) {
@@ -34,9 +41,10 @@ public enum WeightUnit {
         ) / 100.0;
     }
 
-    // UC9 UPDATE
-    // Convert base unit (kilogram) to this unit
+    // UC10 UPDATE
+    // Implement IMeasurable contract for weight units
 
+    @Override
     public double convertFromBaseUnit(
             double baseValue
     ) {
@@ -47,5 +55,24 @@ public enum WeightUnit {
         return Math.round(
                 convertedValue * 100.0
         ) / 100.0;
+    }
+
+    public static void main(
+            String[] args
+    ) {
+
+        System.out.println(
+                "1 KG in grams = "
+                + GRAM.convertFromBaseUnit(
+                        1.0
+                )
+        );
+
+        System.out.println(
+                "1000 G in kg = "
+                + GRAM.convertToBaseUnit(
+                        1000.0
+                )
+        );
     }
 }
