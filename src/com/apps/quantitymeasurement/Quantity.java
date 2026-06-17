@@ -8,6 +8,60 @@ public class Quantity<U extends IMeasurable> {
     private final double value;
     private final U unit;
 
+    // UC13 UPDATE
+    // Centralized arithmetic operation dispatch
+
+    private enum ArithmeticOperation {
+
+        ADD {
+            @Override
+            double compute(
+                    double left,
+                    double right
+            ) {
+                return left + right;
+            }
+        },
+
+        SUBTRACT {
+            @Override
+            double compute(
+                    double left,
+                    double right
+            ) {
+                return left - right;
+            }
+        },
+
+        DIVIDE {
+            @Override
+            double compute(
+                    double left,
+                    double right
+            ) {
+
+                if (
+                        Double.compare(
+                                right,
+                                0.0
+                        ) == 0
+                ) {
+
+                    throw new ArithmeticException(
+                            "Cannot divide by zero"
+                    );
+                }
+
+                return left / right;
+            }
+        };
+
+        abstract double compute(
+                double left,
+                double right
+        );
+    }
+
     public Quantity(
             double value,
             U unit
@@ -38,6 +92,73 @@ public class Quantity<U extends IMeasurable> {
 
         return unit.convertToBaseUnit(
                 value
+        );
+    }
+
+    // UC13 UPDATE
+    // Centralized validation for arithmetic operations
+
+    private void validateArithmeticOperands(
+            Quantity<U> quantity,
+            U targetUnit,
+            boolean targetUnitRequired
+    ) {
+
+        if (quantity == null) {
+
+            throw new IllegalArgumentException(
+                    "Quantity cannot be null"
+            );
+        }
+
+        if (
+                this.unit.getClass()
+                        != quantity.unit.getClass()
+        ) {
+
+            throw new IllegalArgumentException(
+                    "Incompatible quantity types"
+            );
+        }
+
+        if (
+                !Double.isFinite(this.value)
+                || !Double.isFinite(quantity.value)
+        ) {
+
+            throw new IllegalArgumentException(
+                    "Invalid numeric value"
+            );
+        }
+
+        if (
+                targetUnitRequired
+                && targetUnit == null
+        ) {
+
+            throw new IllegalArgumentException(
+                    "Target unit cannot be null"
+            );
+        }
+    }
+
+    // UC13 UPDATE
+    // Centralized base-unit arithmetic logic
+
+    private double performBaseArithmetic(
+            Quantity<U> quantity,
+            ArithmeticOperation operation
+    ) {
+
+        double leftValue =
+                this.convertToBaseUnit();
+
+        double rightValue =
+                quantity.convertToBaseUnit();
+
+        return operation.compute(
+                leftValue,
+                rightValue
         );
     }
 
@@ -123,42 +244,37 @@ public class Quantity<U extends IMeasurable> {
         );
     }
 
-    // UC10 UPDATE
-    // Addition result returned in first operand unit
+    // UC13 UPDATE
+    // Addition delegates to centralized helper
 
     public Quantity<U> add(
             Quantity<U> quantity
     ) {
 
-        if (quantity == null) {
+        validateArithmeticOperands(
+                quantity,
+                null,
+                false
+        );
 
-            throw new IllegalArgumentException(
-                    "Quantity to add cannot be null"
-            );
-        }
+        double resultInBaseUnit =
+                performBaseArithmetic(
+                        quantity,
+                        ArithmeticOperation.ADD
+                );
 
-        double thisQuantityInBaseUnit =
-                this.convertToBaseUnit();
-
-        double thatQuantityInBaseUnit =
-                quantity.convertToBaseUnit();
-
-        double sumInBaseUnit =
-                thisQuantityInBaseUnit +
-                thatQuantityInBaseUnit;
-
-        double convertedSum =
+        double convertedResult =
                 unit.convertFromBaseUnit(
-                        sumInBaseUnit
+                        resultInBaseUnit
                 );
 
         return new Quantity<>(
-                convertedSum,
+                convertedResult,
                 unit
         );
     }
 
-    // UC10 UPDATE
+    // UC13 UPDATE
     // Addition with explicit target unit
 
     public Quantity<U> add(
@@ -166,77 +282,60 @@ public class Quantity<U extends IMeasurable> {
             U targetUnit
     ) {
 
-        if (quantity == null) {
+        validateArithmeticOperands(
+                quantity,
+                targetUnit,
+                true
+        );
 
-            throw new IllegalArgumentException(
-                    "Quantity to add cannot be null"
-            );
-        }
+        double resultInBaseUnit =
+                performBaseArithmetic(
+                        quantity,
+                        ArithmeticOperation.ADD
+                );
 
-        if (targetUnit == null) {
-
-            throw new IllegalArgumentException(
-                    "Target unit cannot be null"
-            );
-        }
-
-        double thisQuantityInBaseUnit =
-                this.convertToBaseUnit();
-
-        double thatQuantityInBaseUnit =
-                quantity.convertToBaseUnit();
-
-        double sumInBaseUnit =
-                thisQuantityInBaseUnit +
-                thatQuantityInBaseUnit;
-
-        double convertedSum =
+        double convertedResult =
                 targetUnit.convertFromBaseUnit(
-                        sumInBaseUnit
+                        resultInBaseUnit
                 );
 
         return new Quantity<>(
-                convertedSum,
+                convertedResult,
                 targetUnit
         );
     }
 
-    // UC12 UPDATE
-    // Subtraction result returned in first operand unit
+    // UC13 UPDATE
+    // Subtraction delegates to centralized helper
 
     public Quantity<U> subtract(
             Quantity<U> quantity
     ) {
 
-        if (quantity == null) {
+        validateArithmeticOperands(
+                quantity,
+                null,
+                false
+        );
 
-            throw new IllegalArgumentException(
-                    "Quantity to subtract cannot be null"
-            );
-        }
+        double resultInBaseUnit =
+                performBaseArithmetic(
+                        quantity,
+                        ArithmeticOperation.SUBTRACT
+                );
 
-        double thisQuantityInBaseUnit =
-                this.convertToBaseUnit();
-
-        double thatQuantityInBaseUnit =
-                quantity.convertToBaseUnit();
-
-        double differenceInBaseUnit =
-                thisQuantityInBaseUnit -
-                thatQuantityInBaseUnit;
-
-        double convertedDifference =
+        double convertedResult =
                 unit.convertFromBaseUnit(
-                        differenceInBaseUnit
+                        resultInBaseUnit
                 );
 
         return new Quantity<>(
-                convertedDifference,
+                convertedResult,
                 unit
         );
     }
 
-    // UC12 UPDATE
+    // UC13 UPDATE
     // Subtraction with explicit target unit
 
     public Quantity<U> subtract(
@@ -244,75 +343,46 @@ public class Quantity<U extends IMeasurable> {
             U targetUnit
     ) {
 
-        if (quantity == null) {
+        validateArithmeticOperands(
+                quantity,
+                targetUnit,
+                true
+        );
 
-            throw new IllegalArgumentException(
-                    "Quantity to subtract cannot be null"
-            );
-        }
+        double resultInBaseUnit =
+                performBaseArithmetic(
+                        quantity,
+                        ArithmeticOperation.SUBTRACT
+                );
 
-        if (targetUnit == null) {
-
-            throw new IllegalArgumentException(
-                    "Target unit cannot be null"
-            );
-        }
-
-        double thisQuantityInBaseUnit =
-                this.convertToBaseUnit();
-
-        double thatQuantityInBaseUnit =
-                quantity.convertToBaseUnit();
-
-        double differenceInBaseUnit =
-                thisQuantityInBaseUnit -
-                thatQuantityInBaseUnit;
-
-        double convertedDifference =
+        double convertedResult =
                 targetUnit.convertFromBaseUnit(
-                        differenceInBaseUnit
+                        resultInBaseUnit
                 );
 
         return new Quantity<>(
-                convertedDifference,
+                convertedResult,
                 targetUnit
         );
     }
 
-    // UC12 UPDATE
-    // Division returns a dimensionless ratio
+    // UC13 UPDATE
+    // Division delegates to centralized helper
 
     public double divide(
             Quantity<U> quantity
     ) {
 
-        if (quantity == null) {
+        validateArithmeticOperands(
+                quantity,
+                null,
+                false
+        );
 
-            throw new IllegalArgumentException(
-                    "Quantity to divide cannot be null"
-            );
-        }
-
-        double divisor =
-                quantity.convertToBaseUnit();
-
-        if (
-                Double.compare(
-                        divisor,
-                        0.0
-                ) == 0
-        ) {
-
-            throw new ArithmeticException(
-                    "Cannot divide by zero"
-            );
-        }
-
-        double dividend =
-                this.convertToBaseUnit();
-
-        return dividend /
-                divisor;
+        return performBaseArithmetic(
+                quantity,
+                ArithmeticOperation.DIVIDE
+        );
     }
 
     @Override

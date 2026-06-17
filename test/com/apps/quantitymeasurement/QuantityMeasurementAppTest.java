@@ -4623,4 +4623,357 @@ public void testGenericQuantity_NullUnit() {
         );
     }
 
+    // ==================================================
+// UC13 UPDATE
+// CENTRALIZED ARITHMETIC REFACTORING TESTS
+// ==================================================
+
+@Test
+public void testValidation_NullOperand_Add() {
+
+    Quantity<LengthUnit> feet =
+            new Quantity<>(
+                    1.0,
+                    LengthUnit.FEET
+            );
+
+    IllegalArgumentException exception =
+            assertThrows(
+                    IllegalArgumentException.class,
+                    () -> feet.add(null)
+            );
+
+    assertEquals(
+            "Quantity cannot be null",
+            exception.getMessage()
+    );
+}
+
+@Test
+public void testValidation_NullOperand_Subtract() {
+
+    Quantity<LengthUnit> feet =
+            new Quantity<>(
+                    1.0,
+                    LengthUnit.FEET
+            );
+
+    IllegalArgumentException exception =
+            assertThrows(
+                    IllegalArgumentException.class,
+                    () -> feet.subtract(null)
+            );
+
+    assertEquals(
+            "Quantity cannot be null",
+            exception.getMessage()
+    );
+}
+
+@Test
+public void testValidation_NullOperand_Divide() {
+
+    Quantity<LengthUnit> feet =
+            new Quantity<>(
+                    1.0,
+                    LengthUnit.FEET
+            );
+
+    IllegalArgumentException exception =
+            assertThrows(
+                    IllegalArgumentException.class,
+                    () -> feet.divide(null)
+            );
+
+    assertEquals(
+            "Quantity cannot be null",
+            exception.getMessage()
+    );
+}
+
+@Test
+public void testDivisionByZero_Length() {
+
+    Quantity<LengthUnit> feet =
+            new Quantity<>(
+                    10.0,
+                    LengthUnit.FEET
+            );
+
+    Quantity<LengthUnit> zero =
+            new Quantity<>(
+                    0.0,
+                    LengthUnit.FEET
+            );
+
+    assertThrows(
+            ArithmeticException.class,
+            () -> feet.divide(zero)
+    );
+}
+
+@Test
+public void testDivisionByZero_Weight() {
+
+    Quantity<WeightUnit> kilogram =
+            new Quantity<>(
+                    10.0,
+                    WeightUnit.KILOGRAM
+            );
+
+    Quantity<WeightUnit> zero =
+            new Quantity<>(
+                    0.0,
+                    WeightUnit.GRAM
+            );
+
+    assertThrows(
+            ArithmeticException.class,
+            () -> kilogram.divide(zero)
+    );
+}
+
+@Test
+public void testDivisionByZero_Volume() {
+
+    Quantity<VolumeUnit> litre =
+            new Quantity<>(
+                    10.0,
+                    VolumeUnit.LITRE
+            );
+
+    Quantity<VolumeUnit> zero =
+            new Quantity<>(
+                    0.0,
+                    VolumeUnit.MILLILITRE
+            );
+
+    assertThrows(
+            ArithmeticException.class,
+            () -> litre.divide(zero)
+    );
+}
+
+@Test
+public void testSubtraction_NonCommutative_Length() {
+
+    Quantity<LengthUnit> feet =
+            new Quantity<>(
+                    2.0,
+                    LengthUnit.FEET
+            );
+
+    Quantity<LengthUnit> inches =
+            new Quantity<>(
+                    12.0,
+                    LengthUnit.INCHES
+            );
+
+    Quantity<LengthUnit> result1 =
+            feet.subtract(
+                    inches,
+                    LengthUnit.FEET
+            );
+
+    Quantity<LengthUnit> result2 =
+            inches.subtract(
+                    feet,
+                    LengthUnit.FEET
+            );
+
+    assertFalse(
+            result1.equals(result2)
+    );
+}
+
+@Test
+public void testDivision_NonCommutative_Length() {
+
+    Quantity<LengthUnit> feet =
+            new Quantity<>(
+                    2.0,
+                    LengthUnit.FEET
+            );
+
+    Quantity<LengthUnit> inches =
+            new Quantity<>(
+                    12.0,
+                    LengthUnit.INCHES
+            );
+
+    double result1 =
+            feet.divide(inches);
+
+    double result2 =
+            inches.divide(feet);
+
+    assertNotEquals(
+            result1,
+            result2
+    );
+}
+
+@Test
+public void testImmutability_AfterAddition() {
+
+    Quantity<LengthUnit> original =
+            new Quantity<>(
+                    1.0,
+                    LengthUnit.FEET
+            );
+
+    Quantity<LengthUnit> inches =
+            new Quantity<>(
+                    12.0,
+                    LengthUnit.INCHES
+            );
+
+    original.add(inches);
+
+    assertTrue(
+            original.equals(
+                    new Quantity<>(
+                            1.0,
+                            LengthUnit.FEET
+                    )
+            )
+    );
+}
+
+@Test
+public void testImmutability_AfterSubtraction() {
+
+    Quantity<LengthUnit> original =
+            new Quantity<>(
+                    2.0,
+                    LengthUnit.FEET
+            );
+
+    Quantity<LengthUnit> inches =
+            new Quantity<>(
+                    12.0,
+                    LengthUnit.INCHES
+            );
+
+    original.subtract(inches);
+
+    assertTrue(
+            original.equals(
+                    new Quantity<>(
+                            2.0,
+                            LengthUnit.FEET
+                    )
+            )
+    );
+}
+
+@Test
+public void testImmutability_AfterDivision() {
+
+    Quantity<LengthUnit> original =
+            new Quantity<>(
+                    2.0,
+                    LengthUnit.FEET
+            );
+
+    Quantity<LengthUnit> inches =
+            new Quantity<>(
+                    12.0,
+                    LengthUnit.INCHES
+            );
+
+    original.divide(inches);
+
+    assertTrue(
+            original.equals(
+                    new Quantity<>(
+                            2.0,
+                            LengthUnit.FEET
+                    )
+            )
+    );
+}
+
+@Test
+public void testAllOperations_AcrossWeightCategory() {
+
+    Quantity<WeightUnit> kilogram =
+            new Quantity<>(
+                    1.0,
+                    WeightUnit.KILOGRAM
+            );
+
+    Quantity<WeightUnit> gram =
+            new Quantity<>(
+                    1000.0,
+                    WeightUnit.GRAM
+            );
+
+    assertTrue(
+            kilogram.add(gram)
+                    .equals(
+                            new Quantity<>(
+                                    2.0,
+                                    WeightUnit.KILOGRAM
+                            )
+                    )
+    );
+
+    assertTrue(
+            kilogram.subtract(gram)
+                    .equals(
+                            new Quantity<>(
+                                    0.0,
+                                    WeightUnit.KILOGRAM
+                            )
+                    )
+    );
+
+    assertEquals(
+            1.0,
+            kilogram.divide(gram)
+    );
+}
+
+@Test
+public void testAllOperations_AcrossVolumeCategory() {
+
+    Quantity<VolumeUnit> litre =
+            new Quantity<>(
+                    1.0,
+                    VolumeUnit.LITRE
+            );
+
+    Quantity<VolumeUnit> millilitre =
+            new Quantity<>(
+                    1000.0,
+                    VolumeUnit.MILLILITRE
+            );
+
+    assertTrue(
+            litre.add(millilitre)
+                    .equals(
+                            new Quantity<>(
+                                    2.0,
+                                    VolumeUnit.LITRE
+                            )
+                    )
+    );
+
+    assertTrue(
+            litre.subtract(millilitre)
+                    .equals(
+                            new Quantity<>(
+                                    0.0,
+                                    VolumeUnit.LITRE
+                            )
+                    )
+    );
+
+    assertEquals(
+            1.0,
+            litre.divide(millilitre)
+    );
+}
+
 }
