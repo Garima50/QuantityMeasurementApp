@@ -141,6 +141,19 @@ public class Quantity<U extends IMeasurable> {
             );
         }
     }
+    
+// UC14 UPDATE
+// Validate arithmetic support before operation execution
+
+private void validateOperationSupport(
+        ArithmeticOperation operation
+) {
+
+    this.unit
+            .validateOperationSupport(
+                    operation.name()
+            );
+}
 
     // UC13 UPDATE
     // Centralized base-unit arithmetic logic
@@ -230,18 +243,21 @@ public class Quantity<U extends IMeasurable> {
             );
         }
 
-        double baseValue =
-                convertToBaseUnit();
+        // UC14 UPDATE
+      // Supports linear and temperature conversions
 
-        double convertedValue =
-                targetUnit.convertFromBaseUnit(
-                        baseValue
-                );
+       double baseValue =
+        convertToBaseUnit();
 
-        return new Quantity<>(
-                convertedValue,
-                targetUnit
+       double convertedValue =
+        targetUnit.convertFromBaseUnit(
+                baseValue
         );
+
+       return new Quantity<>(
+        convertedValue,
+        targetUnit
+);
     }
 
     // UC13 UPDATE
@@ -255,6 +271,11 @@ public class Quantity<U extends IMeasurable> {
                 quantity,
                 null,
                 false
+        );
+
+        validateOperationSupport(
+        ArithmeticOperation.ADD
+        
         );
 
         double resultInBaseUnit =
@@ -288,6 +309,11 @@ public class Quantity<U extends IMeasurable> {
                 true
         );
 
+        validateOperationSupport(
+        ArithmeticOperation.ADD
+        
+        );
+
         double resultInBaseUnit =
                 performBaseArithmetic(
                         quantity,
@@ -316,6 +342,11 @@ public class Quantity<U extends IMeasurable> {
                 quantity,
                 null,
                 false
+        );
+
+        validateOperationSupport(
+        ArithmeticOperation.SUBTRACT
+
         );
 
         double resultInBaseUnit =
@@ -349,6 +380,12 @@ public class Quantity<U extends IMeasurable> {
                 true
         );
 
+
+        validateOperationSupport(
+        ArithmeticOperation.SUBTRACT
+
+        );
+
         double resultInBaseUnit =
                 performBaseArithmetic(
                         quantity,
@@ -378,6 +415,10 @@ public class Quantity<U extends IMeasurable> {
                 null,
                 false
         );
+
+        validateOperationSupport(
+        ArithmeticOperation.DIVIDE
+);
 
         return performBaseArithmetic(
                 quantity,

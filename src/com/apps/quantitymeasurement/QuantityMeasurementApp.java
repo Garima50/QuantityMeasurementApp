@@ -403,5 +403,123 @@ public class QuantityMeasurementApp {
                         millilitre
                 )
         );
+
+                System.out.println();
+
+        // UC14 UPDATE
+        // Temperature measurement demonstrations
+
+        System.out.println(
+                "===== TEMPERATURE TESTS ====="
+        );
+
+        Quantity<TemperatureUnit> celsius =
+                new Quantity<>(
+                        0.0,
+                        TemperatureUnit.CELSIUS
+                );
+
+        Quantity<TemperatureUnit> fahrenheit =
+                new Quantity<>(
+                        32.0,
+                        TemperatureUnit.FAHRENHEIT
+                );
+
+        Quantity<TemperatureUnit> kelvin =
+                new Quantity<>(
+                        273.15,
+                        TemperatureUnit.KELVIN
+                );
+
+        System.out.println(
+                demonstrateEquality(
+                        celsius,
+                        fahrenheit
+                )
+        );
+
+        System.out.println(
+                demonstrateEquality(
+                        celsius,
+                        kelvin
+                )
+        );
+
+        System.out.println(
+                demonstrateConversion(
+                        celsius,
+                        TemperatureUnit.FAHRENHEIT
+                )
+        );
+
+        System.out.println(
+                demonstrateConversion(
+                        fahrenheit,
+                        TemperatureUnit.CELSIUS
+                )
+        );
+
+        System.out.println(
+                demonstrateConversion(
+                        kelvin,
+                        TemperatureUnit.CELSIUS
+                )
+        );
+
+        try {
+
+            System.out.println(
+                    demonstrateAddition(
+                            celsius,
+                            fahrenheit
+                    )
+            );
+        }
+        catch (
+                UnsupportedOperationException e
+        ) {
+
+            System.out.println(
+                    e.getMessage()
+            );
+        }
+
+        try {
+
+            System.out.println(
+                    demonstrateSubtraction(
+                            celsius,
+                            fahrenheit
+                    )
+            );
+        }
+        catch (
+                UnsupportedOperationException e
+        ) {
+
+            System.out.println(
+                    e.getMessage()
+            );
+        }
+
+        try {
+
+            System.out.println(
+                    demonstrateDivision(
+                            celsius,
+                            fahrenheit
+                    )
+            );
+        }
+        catch (
+                UnsupportedOperationException e
+        ) {
+
+            System.out.println(
+                    e.getMessage()
+            );
+        }
+
+        
     }
 }
