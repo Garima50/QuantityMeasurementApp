@@ -1,6 +1,8 @@
-package com.apps.quantitymeasurement;
+package com.apps.quantitymeasurement.enums;
 
 import java.util.function.Function;
+
+import com.apps.quantitymeasurement.interfaces.IMeasurable;
 
 public enum TemperatureUnit implements IMeasurable {
 
@@ -47,9 +49,10 @@ public enum TemperatureUnit implements IMeasurable {
     // UC14 UPDATE
     // Temperature does not support arithmetic
 
-    private static final SupportsArithmetic
-            supportsArithmetic =
-            () -> false;
+    @Override
+     public boolean supportsArithmetic() {
+    return false;
+}
 
     @Override
     public double getConversionFactor() {
@@ -93,15 +96,15 @@ public enum TemperatureUnit implements IMeasurable {
         ) / 100.0;
     }
 
-    // UC14 UPDATE
-    // Temperature arithmetic support disabled
+//     // UC14 UPDATE
+//     // Temperature arithmetic support disabled
 
-    @Override
-    public boolean supportsArithmetic() {
+//     @Override
+//     public boolean supportsArithmetic() {
 
-        return supportsArithmetic
-                .isSupported();
-    }
+//         return supportsArithmetic
+//                 .isSupported();
+//     }
 
     // UC14 UPDATE
     // Reject arithmetic operations on temperature
@@ -116,6 +119,24 @@ public enum TemperatureUnit implements IMeasurable {
                 + operation.toLowerCase()
                 + " operation"
         );
+    }
+
+        // UC15 UPDATE
+    // Returns measurement category
+
+    @Override
+    public String getMeasurementType() {
+
+        return "TEMPERATURE";
+    }
+
+    // UC15 UPDATE
+    // Returns unit instance
+
+    @Override
+    public IMeasurable getUnitInstance() {
+
+        return this;
     }
 
     public static void main(

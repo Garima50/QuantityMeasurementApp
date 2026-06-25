@@ -1,4 +1,6 @@
-package com.apps.quantitymeasurement;
+package com.apps.quantitymeasurement.enums;
+
+import com.apps.quantitymeasurement.interfaces.IMeasurable;
 
 public enum VolumeUnit implements IMeasurable {
 
@@ -55,6 +57,24 @@ public enum VolumeUnit implements IMeasurable {
         return Math.round(
                 convertedValue * 100.0
         ) / 100.0;
+    }
+
+        // UC15 UPDATE
+    // Returns measurement category
+
+    @Override
+    public String getMeasurementType() {
+
+        return "VOLUME";
+    }
+
+    // UC15 UPDATE
+    // Returns unit instance
+
+    @Override
+    public IMeasurable getUnitInstance() {
+
+        return this;
     }
 
     public static void main(

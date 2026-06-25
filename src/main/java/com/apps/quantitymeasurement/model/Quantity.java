@@ -1,6 +1,10 @@
-package com.apps.quantitymeasurement;
+package com.apps.quantitymeasurement.model;
 
-public class Quantity<U extends IMeasurable> {
+import java.io.Serializable;
+
+import com.apps.quantitymeasurement.interfaces.IMeasurable;
+
+public class Quantity<U extends IMeasurable> implements Serializable {
 
     // UC10 UPDATE
     // Generic quantity supporting all measurable categories

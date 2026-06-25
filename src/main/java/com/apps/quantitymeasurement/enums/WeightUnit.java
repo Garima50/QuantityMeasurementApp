@@ -1,15 +1,19 @@
-package com.apps.quantitymeasurement;
+package com.apps.quantitymeasurement.enums;
 
-public enum LengthUnit implements IMeasurable {
+import com.apps.quantitymeasurement.interfaces.IMeasurable;
 
-    FEET(12.0),
-    INCHES(1.0),
-    YARDS(36.0),
-    CENTIMETERS(0.393701);
+public enum WeightUnit implements IMeasurable {
+
+    // UC10 UPDATE
+    // Implement IMeasurable for generic quantity support
+
+    KILOGRAM(1.0),
+    GRAM(0.001),
+    POUND(0.453592);
 
     private final double conversionFactor;
 
-    LengthUnit(
+    WeightUnit(
             double conversionFactor
     ) {
 
@@ -24,7 +28,7 @@ public enum LengthUnit implements IMeasurable {
     }
 
     // UC10 UPDATE
-    // Implement IMeasurable contract for length units
+    // Implement IMeasurable contract for weight units
 
     @Override
     public double convertToBaseUnit(
@@ -40,7 +44,7 @@ public enum LengthUnit implements IMeasurable {
     }
 
     // UC10 UPDATE
-    // Implement IMeasurable contract for length units
+    // Implement IMeasurable contract for weight units
 
     @Override
     public double convertFromBaseUnit(
@@ -55,21 +59,40 @@ public enum LengthUnit implements IMeasurable {
         ) / 100.0;
     }
 
+
+        // UC15 UPDATE
+    // Returns measurement category
+
+    @Override
+    public String getMeasurementType() {
+
+        return "WEIGHT";
+    }
+
+    // UC15 UPDATE
+    // Returns unit instance
+
+    @Override
+    public IMeasurable getUnitInstance() {
+
+        return this;
+    }
+
     public static void main(
             String[] args
     ) {
 
         System.out.println(
-                "1 FOOT in inches = "
-                + FEET.convertToBaseUnit(
+                "1 KG in grams = "
+                + GRAM.convertFromBaseUnit(
                         1.0
                 )
         );
 
         System.out.println(
-                "12 INCHES in feet = "
-                + FEET.convertFromBaseUnit(
-                        12.0
+                "1000 G in kg = "
+                + GRAM.convertToBaseUnit(
+                        1000.0
                 )
         );
     }
