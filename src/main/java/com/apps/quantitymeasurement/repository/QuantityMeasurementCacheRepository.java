@@ -250,5 +250,60 @@ public class QuantityMeasurementCacheRepository
         );
     }
 
+    @Override
+public List<QuantityMeasurementEntity> getMeasurementsByOperation(
+        String operation
+) {
+
+    return quantityMeasurementEntityCache.stream()
+            .filter(entity -> operation.equals(entity.getOperation()))
+            .toList();
+}
+
+@Override
+public List<QuantityMeasurementEntity> getMeasurementsByType(
+        String measurementType
+) {
+
+    return quantityMeasurementEntityCache.stream()
+            .filter(entity ->
+                measurementType.equals(
+                        entity.getThisQuantity()
+                        .getUnit()
+                        .getMeasurementType()
+                )
+            )
+            .toList();
+}
+
+@Override
+public int getTotalCount() {
+
+    return quantityMeasurementEntityCache.size();
+}
+
+@Override
+public void deleteAll() {
+
+    quantityMeasurementEntityCache.clear();
+    for (QuantityMeasurementEntity entity : quantityMeasurementEntityCache) {
+    saveToDisk(entity);
+}
+}
+
+@Override
+public String getPoolStatistics() {
+
+    return "Cache Repository - Connection pool not applicable";
+}
+
+@Override
+public void releaseResources() {
+
+    for (QuantityMeasurementEntity entity : quantityMeasurementEntityCache) {
+    saveToDisk(entity);
+}
+}
+
 
 }

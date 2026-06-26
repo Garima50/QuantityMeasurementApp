@@ -8,9 +8,11 @@ import com.apps.quantitymeasurement.enums.WeightUnit;
 import com.apps.quantitymeasurement.interfaces.IMeasurable;
 import com.apps.quantitymeasurement.model.Quantity;
 import com.apps.quantitymeasurement.repository.IQuantityMeasurementRepository;
-import com.apps.quantitymeasurement.repository.QuantityMeasurementCacheRepository;
+//import com.apps.quantitymeasurement.repository.QuantityMeasurementCacheRepository;
+import com.apps.quantitymeasurement.repository.QuantityMeasurementDatabaseRepository;
 import com.apps.quantitymeasurement.service.IQuantityMeasurementService;
 import com.apps.quantitymeasurement.service.QuantityMeasurementServiceImpl;
+import com.apps.quantitymeasurement.util.ConnectionPool;
 
 public class QuantityMeasurementApp {
 
@@ -248,8 +250,11 @@ public class QuantityMeasurementApp {
 
     public static void main(String[] args) {
 
-    IQuantityMeasurementRepository repository =
-            QuantityMeasurementCacheRepository.getInstance();
+    // UC16 UPDATE
+// Use JDBC database repository
+
+IQuantityMeasurementRepository repository =
+        QuantityMeasurementDatabaseRepository.getInstance();
 
     IQuantityMeasurementService service =
             new QuantityMeasurementServiceImpl(repository);
@@ -419,6 +424,8 @@ public class QuantityMeasurementApp {
                 e.getMessage()
         );
     }
+
+    ConnectionPool.closePool();
 
 }
         

@@ -6,15 +6,33 @@ import com.apps.quantitymeasurement.entity.QuantityMeasurementEntity;
 
 public interface IQuantityMeasurementRepository {
 
-    // UC15 UPDATE
-    // Stores a quantity measurement operation
-
+    // Save measurement
     void save(
             QuantityMeasurementEntity entity
     );
 
-    // UC15 UPDATE
-    // Returns all stored quantity measurement operations
-
+    // Retrieve all measurements
     List<QuantityMeasurementEntity> getAllMeasurements();
+
+    // Retrieve measurements by operation
+    List<QuantityMeasurementEntity> getMeasurementsByOperation(
+            String operation
+    );
+
+    // Retrieve measurements by measurement type
+    List<QuantityMeasurementEntity> getMeasurementsByType(
+            String measurementType
+    );
+
+    // Total stored measurements
+    int getTotalCount();
+
+    // Delete all stored measurements
+    void deleteAll();
+
+    // Pool information
+    String getPoolStatistics();
+
+    // Cleanup resources
+    void releaseResources();
 }
