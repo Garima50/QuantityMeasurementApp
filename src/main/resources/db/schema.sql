@@ -8,16 +8,13 @@ CREATE TABLE IF NOT EXISTS quantity_measurements (
 
     first_measurement_type VARCHAR(30),
 
-
     second_value DOUBLE,
 
     second_unit VARCHAR(50),
 
     second_measurement_type VARCHAR(30),
 
-
     operation VARCHAR(30),
-
 
     result_value DOUBLE,
 
