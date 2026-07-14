@@ -8,30 +8,29 @@ import org.junit.jupiter.api.Test;
 
 import com.apps.quantitymeasurement.dto.QuantityDTO;
 import com.apps.quantitymeasurement.enums.LengthUnit;
-//import com.apps.quantitymeasurement.enums.TemperatureUnit;
-import com.apps.quantitymeasurement.repository.QuantityMeasurementDatabaseRepository;
 import com.apps.quantitymeasurement.service.IQuantityMeasurementService;
-import com.apps.quantitymeasurement.service.QuantityMeasurementServiceImpl;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+
+import com.apps.quantitymeasurement.repository.QuantityMeasurementRepository;
 
 // UC16 UPDATE
 // Integration tests for service and database repository
+@SpringBootTest
 class QuantityMeasurementIntegrationTest {
 
-    private QuantityMeasurementDatabaseRepository repository;
+    @Autowired
+    private QuantityMeasurementRepository repository;
+
+    @Autowired
     private IQuantityMeasurementService service;
 
     // UC16 UPDATE
     // Initialize service and database before every test
     @BeforeEach
     void setUp() {
-
-        repository =
-                QuantityMeasurementDatabaseRepository.getInstance();
-
         repository.deleteAll();
-
-        service =
-                new QuantityMeasurementServiceImpl(repository);
     }
 
     // UC16 UPDATE
@@ -63,7 +62,7 @@ void testCompareIntegration() {
 
     assertEquals(
             1,
-            repository.getTotalCount()
+            repository.count()
     );
 }
 
@@ -106,7 +105,7 @@ QuantityDTO result =
 
     assertEquals(
             1,
-            repository.getTotalCount()
+            repository.count()
     );
 }
 

@@ -7,9 +7,9 @@ import com.apps.quantitymeasurement.enums.VolumeUnit;
 import com.apps.quantitymeasurement.enums.WeightUnit;
 import com.apps.quantitymeasurement.interfaces.IMeasurable;
 import com.apps.quantitymeasurement.model.Quantity;
-import com.apps.quantitymeasurement.repository.IQuantityMeasurementRepository;
+import com.apps.quantitymeasurement.repository.QuantityMeasurementRepository;
 //import com.apps.quantitymeasurement.repository.QuantityMeasurementCacheRepository;
-import com.apps.quantitymeasurement.repository.QuantityMeasurementDatabaseRepository;
+//import com.apps.quantitymeasurement.repository.QuantityMeasurementDatabaseRepository;
 import com.apps.quantitymeasurement.service.IQuantityMeasurementService;
 import com.apps.quantitymeasurement.service.QuantityMeasurementServiceImpl;
 import com.apps.quantitymeasurement.util.ConnectionPool;
@@ -253,180 +253,180 @@ public class QuantityMeasurementApp {
     // UC16 UPDATE
 // Use JDBC database repository
 
-IQuantityMeasurementRepository repository =
-        QuantityMeasurementDatabaseRepository.getInstance();
-
-    IQuantityMeasurementService service =
-            new QuantityMeasurementServiceImpl(repository);
-
-    // ---------------- LENGTH ----------------
-
-    QuantityDTO oneFoot =
-            new QuantityDTO(
-                    1,
-                    LengthUnit.FEET.name(),
-                    "LENGTH"
-            );
-
-    QuantityDTO twelveInches =
-            new QuantityDTO(
-                    12,
-                    LengthUnit.INCHES.name(),
-                    "LENGTH"
-            );
-
-    System.out.println(
-            "1 Foot == 12 Inches : "
-                    + service.compare(oneFoot, twelveInches)
-    );
-
-    QuantityDTO yard =
-            new QuantityDTO(
-                    0,
-                    LengthUnit.YARDS.name(),
-                    "LENGTH"
-            );
-
-    System.out.println(
-            "1 Foot -> Yard : "
-                    + service.convert(oneFoot, yard)
-    );
-
-    System.out.println(
-            "1 Foot + 12 Inches : "
-                    + service.add(oneFoot, twelveInches)
-    );
-
-    System.out.println(
-            "1 Foot - 12 Inches : "
-                    + service.subtract(oneFoot, twelveInches)
-    );
-
-    System.out.println(
-            "1 Foot / 12 Inches : "
-                    + service.divide(oneFoot, twelveInches)
-    );
-
-
-
-    // ---------------- WEIGHT ----------------
-
-    QuantityDTO oneKg =
-            new QuantityDTO(
-                    1,
-                    WeightUnit.KILOGRAM.name(),
-                    "WEIGHT"
-            );
-
-    QuantityDTO thousandGram =
-            new QuantityDTO(
-                    1000,
-                    WeightUnit.GRAM.name(),
-                    "WEIGHT"
-            );
-
-    System.out.println(
-            "1 Kg == 1000 Gram : "
-                    + service.compare(oneKg, thousandGram)
-    );
-
-
-
-    // ---------------- VOLUME ----------------
-
-    QuantityDTO oneGallon =
-            new QuantityDTO(
-                    1,
-                    VolumeUnit.GALLON.name(),
-                    "VOLUME"
-            );
-
-    QuantityDTO litres =
-            new QuantityDTO(
-                    3.78,
-                    VolumeUnit.LITRE.name(),
-                    "VOLUME"
-            );
-
-    System.out.println(
-            "1 Gallon == 3.78 Litres : "
-                    + service.compare(oneGallon, litres)
-    );
-
-
-
-    // ---------------- TEMPERATURE ----------------
-
-    QuantityDTO hundredCelsius =
-            new QuantityDTO(
-                    100,
-                    TemperatureUnit.CELSIUS.name(),
-                    "TEMPERATURE"
-            );
-
-    QuantityDTO fahrenheit =
-            new QuantityDTO(
-                    0,
-                    TemperatureUnit.FAHRENHEIT.name(),
-                    "TEMPERATURE"
-            );
-
-    System.out.println(
-            "100 C -> Fahrenheit : "
-                    + service.convert(
-                    hundredCelsius,
-                    fahrenheit
-            )
-    );
-
-
-
-    // ---------------- TEMPERATURE ARITHMETIC ----------------
-
-    try {
-
-        service.add(
-                hundredCelsius,
-                hundredCelsius
-        );
-
-    } catch (Exception e) {
-
-        System.out.println(
-                e.getMessage()
-        );
-    }
-
-    try {
-
-        service.subtract(
-                hundredCelsius,
-                hundredCelsius
-        );
-
-    } catch (Exception e) {
-
-        System.out.println(
-                e.getMessage()
-        );
-    }
-
-    try {
-
-        service.divide(
-                hundredCelsius,
-                hundredCelsius
-        );
-
-    } catch (Exception e) {
-
-        System.out.println(
-                e.getMessage()
-        );
-    }
-
-    ConnectionPool.closePool();
-
+//QuantityMeasurementRepository repository =
+//        QuantityMeasurementDatabaseRepository.getInstance();
+//
+//    IQuantityMeasurementService service =
+//            new QuantityMeasurementServiceImpl(repository);
+//
+//    // ---------------- LENGTH ----------------
+//
+//    QuantityDTO oneFoot =
+//            new QuantityDTO(
+//                    1,
+//                    LengthUnit.FEET.name(),
+//                    "LENGTH"
+//            );
+//
+//    QuantityDTO twelveInches =
+//            new QuantityDTO(
+//                    12,
+//                    LengthUnit.INCHES.name(),
+//                    "LENGTH"
+//            );
+//
+//    System.out.println(
+//            "1 Foot == 12 Inches : "
+//                    + service.compare(oneFoot, twelveInches)
+//    );
+//
+//    QuantityDTO yard =
+//            new QuantityDTO(
+//                    0,
+//                    LengthUnit.YARDS.name(),
+//                    "LENGTH"
+//            );
+//
+//    System.out.println(
+//            "1 Foot -> Yard : "
+//                    + service.convert(oneFoot, yard)
+//    );
+//
+//    System.out.println(
+//            "1 Foot + 12 Inches : "
+//                    + service.add(oneFoot, twelveInches)
+//    );
+//
+//    System.out.println(
+//            "1 Foot - 12 Inches : "
+//                    + service.subtract(oneFoot, twelveInches)
+//    );
+//
+//    System.out.println(
+//            "1 Foot / 12 Inches : "
+//                    + service.divide(oneFoot, twelveInches)
+//    );
+//
+//
+//
+//    // ---------------- WEIGHT ----------------
+//
+//    QuantityDTO oneKg =
+//            new QuantityDTO(
+//                    1,
+//                    WeightUnit.KILOGRAM.name(),
+//                    "WEIGHT"
+//            );
+//
+//    QuantityDTO thousandGram =
+//            new QuantityDTO(
+//                    1000,
+//                    WeightUnit.GRAM.name(),
+//                    "WEIGHT"
+//            );
+//
+//    System.out.println(
+//            "1 Kg == 1000 Gram : "
+//                    + service.compare(oneKg, thousandGram)
+//    );
+//
+//
+//
+//    // ---------------- VOLUME ----------------
+//
+//    QuantityDTO oneGallon =
+//            new QuantityDTO(
+//                    1,
+//                    VolumeUnit.GALLON.name(),
+//                    "VOLUME"
+//            );
+//
+//    QuantityDTO litres =
+//            new QuantityDTO(
+//                    3.78,
+//                    VolumeUnit.LITRE.name(),
+//                    "VOLUME"
+//            );
+//
+//    System.out.println(
+//            "1 Gallon == 3.78 Litres : "
+//                    + service.compare(oneGallon, litres)
+//    );
+//
+//
+//
+//    // ---------------- TEMPERATURE ----------------
+//
+//    QuantityDTO hundredCelsius =
+//            new QuantityDTO(
+//                    100,
+//                    TemperatureUnit.CELSIUS.name(),
+//                    "TEMPERATURE"
+//            );
+//
+//    QuantityDTO fahrenheit =
+//            new QuantityDTO(
+//                    0,
+//                    TemperatureUnit.FAHRENHEIT.name(),
+//                    "TEMPERATURE"
+//            );
+//
+//    System.out.println(
+//            "100 C -> Fahrenheit : "
+//                    + service.convert(
+//                    hundredCelsius,
+//                    fahrenheit
+//            )
+//    );
+//
+//
+//
+//    // ---------------- TEMPERATURE ARITHMETIC ----------------
+//
+//    try {
+//
+//        service.add(
+//                hundredCelsius,
+//                hundredCelsius
+//        );
+//
+//    } catch (Exception e) {
+//
+//        System.out.println(
+//                e.getMessage()
+//        );
+//    }
+//
+//    try {
+//
+//        service.subtract(
+//                hundredCelsius,
+//                hundredCelsius
+//        );
+//
+//    } catch (Exception e) {
+//
+//        System.out.println(
+//                e.getMessage()
+//        );
+//    }
+//
+//    try {
+//
+//        service.divide(
+//                hundredCelsius,
+//                hundredCelsius
+//        );
+//
+//    } catch (Exception e) {
+//
+//        System.out.println(
+//                e.getMessage()
+//        );
+//    }
+//
+//    ConnectionPool.closePool();
+//
 }
         
     }

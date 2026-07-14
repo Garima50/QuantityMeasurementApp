@@ -7,23 +7,25 @@ import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+
 import com.apps.quantitymeasurement.entity.QuantityMeasurementEntity;
 import com.apps.quantitymeasurement.enums.LengthUnit;
 import com.apps.quantitymeasurement.model.QuantityModel;
 
+@SpringBootTest
 class QuantityMeasurementDatabaseRepositoryTest {
 
-    private QuantityMeasurementDatabaseRepository repository;
+    @Autowired
+    private QuantityMeasurementRepository repository;
 
      // UC16 UPDATE
     // Initialize database repository before every test
-    @BeforeEach
-    void setUp() {
-
-        repository =
-            QuantityMeasurementDatabaseRepository.getInstance();
-            repository.deleteAll();
-    }
+     @BeforeEach
+     void setUp() {
+         repository.deleteAll();
+     }
 
     // UC16 UPDATE
 // Test saving a measurement in the database
@@ -54,7 +56,7 @@ repository.save(entity);
 
 assertEquals(
         1,
-        repository.getTotalCount()
+        repository.count()
 );
 
 }
@@ -88,7 +90,7 @@ void testGetAllMeasurements() {
     repository.save(entity);
 
     List<QuantityMeasurementEntity> measurements =
-            repository.getAllMeasurements();
+            repository.findAll();
 
     assertEquals(
             1,

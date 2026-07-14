@@ -9,25 +9,26 @@ import com.apps.quantitymeasurement.enums.VolumeUnit;
 import com.apps.quantitymeasurement.enums.WeightUnit;
 import com.apps.quantitymeasurement.exception.QuantityMeasurementException;
 import com.apps.quantitymeasurement.model.QuantityModel;
-import com.apps.quantitymeasurement.repository.IQuantityMeasurementRepository;
+import com.apps.quantitymeasurement.repository.QuantityMeasurementRepository;
+import org.springframework.stereotype.Service;
 
+@Service
 public class QuantityMeasurementServiceImpl
         implements IQuantityMeasurementService {
 
     // UC15 UPDATE
     // Repository object for persistence
 
-    private final IQuantityMeasurementRepository repository;
+    private final QuantityMeasurementRepository repository;
 
     // UC15 UPDATE
     // Constructor injection
 
     public QuantityMeasurementServiceImpl(
-            IQuantityMeasurementRepository repository
+            QuantityMeasurementRepository repository
     ) {
 
-        this.repository =
-                repository;
+        this.repository = repository;
     }
 
     // UC15 UPDATE

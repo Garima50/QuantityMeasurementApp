@@ -1,118 +1,118 @@
 package com.apps.quantitymeasurement.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+
 import com.apps.quantitymeasurement.dto.QuantityDTO;
+import com.apps.quantitymeasurement.dto.request.ArithmeticRequest;
+import com.apps.quantitymeasurement.dto.request.CompareRequest;
+import com.apps.quantitymeasurement.dto.request.ConvertRequest;
 import com.apps.quantitymeasurement.service.IQuantityMeasurementService;
 
+@RestController
+@RequestMapping("/api/quantity")
 public class QuantityMeasurementController {
+
+    // UC17 UPDATE
+    // Inject service layer
 
     private final IQuantityMeasurementService service;
 
+    // UC17 UPDATE
+    // Constructor injection
+
+    @Autowired
     public QuantityMeasurementController(
             IQuantityMeasurementService service
     ) {
         this.service = service;
     }
 
-    // UC15 UPDATE
-// Compare two quantities
+    // UC17 UPDATE
+    // Compare two quantities
 
-public boolean compare(
-        QuantityDTO firstQuantity,
-        QuantityDTO secondQuantity
-) {
+    @PostMapping("/compare")
+    public boolean compare(
+            @RequestBody CompareRequest request
+    ) {
 
-    return service.compare(
-            firstQuantity,
-            secondQuantity
-    );
-}
+        return service.compare(
+                request.getFirstQuantity(),
+                request.getSecondQuantity()
+        );
+    }
 
-// UC15 UPDATE
-// Convert a quantity to another unit
+    // UC17 UPDATE
+    // Convert quantity
 
-public QuantityDTO convert(
-        QuantityDTO sourceQuantity,
-        QuantityDTO targetQuantity
-) {
+    @PostMapping("/convert")
+    public QuantityDTO convert(
+            @RequestBody ConvertRequest request
+    ) {
 
-    return service.convert(
-            sourceQuantity,
-            targetQuantity
-    );
-}
+        return service.convert(
+                request.getSourceQuantity(),
+                request.getTargetQuantity()
+        );
+    }
 
-// UC15 UPDATE
-// Add two quantities
+    // UC17 UPDATE
+    // Add quantities
 
-public QuantityDTO add(
-        QuantityDTO firstQuantity,
-        QuantityDTO secondQuantity
-) {
+    @PostMapping("/add")
+    public QuantityDTO add(
+            @RequestBody ArithmeticRequest request
+    ) {
 
-    return service.add(
-            firstQuantity,
-            secondQuantity
-    );
-}
+        if (request.getTargetQuantity() == null) {
 
-// UC15 UPDATE
-// Add two quantities in target unit
+            return service.add(
+                    request.getFirstQuantity(),
+                    request.getSecondQuantity()
+            );
+        }
 
-public QuantityDTO add(
-        QuantityDTO firstQuantity,
-        QuantityDTO secondQuantity,
-        QuantityDTO targetQuantity
-) {
+        return service.add(
+                request.getFirstQuantity(),
+                request.getSecondQuantity(),
+                request.getTargetQuantity()
+        );
+    }
 
-    return service.add(
-            firstQuantity,
-            secondQuantity,
-            targetQuantity
-    );
-}
+    // UC17 UPDATE
+    // Subtract quantities
 
-// UC15 UPDATE
-// Subtract two quantities
+    @PostMapping("/subtract")
+    public QuantityDTO subtract(
+            @RequestBody ArithmeticRequest request
+    ) {
 
-public QuantityDTO subtract(
-        QuantityDTO firstQuantity,
-        QuantityDTO secondQuantity
-) {
+        if (request.getTargetQuantity() == null) {
 
-    return service.subtract(
-            firstQuantity,
-            secondQuantity
-    );
-}
+            return service.subtract(
+                    request.getFirstQuantity(),
+                    request.getSecondQuantity()
+            );
+        }
 
-// UC15 UPDATE
-// Subtract two quantities in target unit
+        return service.subtract(
+                request.getFirstQuantity(),
+                request.getSecondQuantity(),
+                request.getTargetQuantity()
+        );
+    }
 
-public QuantityDTO subtract(
-        QuantityDTO firstQuantity,
-        QuantityDTO secondQuantity,
-        QuantityDTO targetQuantity
-) {
+    // UC17 UPDATE
+    // Divide quantities
 
-    return service.subtract(
-            firstQuantity,
-            secondQuantity,
-            targetQuantity
-    );
-}
+    @PostMapping("/divide")
+    public double divide(
+            @RequestBody ArithmeticRequest request
+    ) {
 
-// UC15 UPDATE
-// Divide two quantities
-
-public double divide(
-        QuantityDTO firstQuantity,
-        QuantityDTO secondQuantity
-) {
-
-    return service.divide(
-            firstQuantity,
-            secondQuantity
-    );
-}
-
+        return service.divide(
+                request.getFirstQuantity(),
+                request.getSecondQuantity()
+        );
+    }
 }

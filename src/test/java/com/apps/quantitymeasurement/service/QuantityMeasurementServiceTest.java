@@ -6,30 +6,21 @@ import com.apps.quantitymeasurement.enums.TemperatureUnit;
 import com.apps.quantitymeasurement.enums.VolumeUnit;
 import com.apps.quantitymeasurement.enums.WeightUnit;
 import com.apps.quantitymeasurement.exception.QuantityMeasurementException;
-import com.apps.quantitymeasurement.repository.IQuantityMeasurementRepository;
-import com.apps.quantitymeasurement.repository.QuantityMeasurementCacheRepository;
 //import com.apps.quantitymeasurement.service.IQuantityMeasurementService;
 //import com.apps.quantitymeasurement.service.QuantityMeasurementServiceImpl;
 
-import org.junit.jupiter.api.BeforeEach;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+@SpringBootTest
 public class QuantityMeasurementServiceTest {
 
-    private IQuantityMeasurementRepository repository;
+    @Autowired
     private IQuantityMeasurementService service;
-
-    @BeforeEach
-    void setUp() {
-
-        repository =
-                QuantityMeasurementCacheRepository.getInstance();
-
-        service =
-                new QuantityMeasurementServiceImpl(repository);
-    }
 
     @Test
 void shouldCompareOneFootAndTwelveInches() {
