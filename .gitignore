@@ -62,3 +62,6 @@ hs_err_pid*
 # Repository Data
 # =========================
 quantity_measurement_repo.ser
+
+
+src/main/resources/application-local.properties
