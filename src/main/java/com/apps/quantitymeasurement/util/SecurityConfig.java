@@ -60,7 +60,13 @@ public class SecurityConfig {
                                 "/webjars",
                                 "/configuration/ui",
                                 "/configuration/security",
-                                "/error"
+                                "/error",
+                                "/",
+                                "/index.html",
+                                "/css/**",
+                                "/js/**",
+                                "/images/**",
+                                "/api/quantity/**"
                         ).permitAll()
                         .anyRequest().authenticated()
                 )
