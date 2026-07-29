@@ -1,6 +1,9 @@
 package com.apps.quantitymeasurement.service;
 
+import java.util.List;
+
 import com.apps.quantitymeasurement.dto.QuantityDTO;
+import com.apps.quantitymeasurement.entity.QuantityMeasurementEntity;
 
 public interface IQuantityMeasurementService {
 
@@ -21,4 +24,9 @@ public interface IQuantityMeasurementService {
                          QuantityDTO targetUnit);
 
     double divide(QuantityDTO firstQuantity, QuantityDTO secondQuantity);
+
+    // UC20 UPDATE
+    // Return past operations, most recent first
+
+    List<QuantityMeasurementEntity> getHistory();
 }

@@ -16,4 +16,6 @@ public interface QuantityMeasurementRepository
     List<QuantityMeasurementEntity> findByFirstMeasurementType(
             String firstMeasurementType
     );
+
+    List<QuantityMeasurementEntity> findAllByOrderByIdDesc();
 }

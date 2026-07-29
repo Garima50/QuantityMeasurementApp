@@ -3,10 +3,13 @@ package com.apps.quantitymeasurement.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 import com.apps.quantitymeasurement.dto.QuantityDTO;
 import com.apps.quantitymeasurement.dto.request.ArithmeticRequest;
 import com.apps.quantitymeasurement.dto.request.CompareRequest;
 import com.apps.quantitymeasurement.dto.request.ConvertRequest;
+import com.apps.quantitymeasurement.entity.QuantityMeasurementEntity;
 import com.apps.quantitymeasurement.service.IQuantityMeasurementService;
 
 @RestController
@@ -114,5 +117,14 @@ public class QuantityMeasurementController {
                 request.getFirstQuantity(),
                 request.getSecondQuantity()
         );
+    }
+
+    // UC20 UPDATE
+    // Return past operations, most recent first
+
+    @GetMapping("/history")
+    public List<QuantityMeasurementEntity> getHistory() {
+
+        return service.getHistory();
     }
 }

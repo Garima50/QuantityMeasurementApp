@@ -9,11 +9,16 @@ import org.springframework.security.web.authentication.AuthenticationSuccessHand
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 
 @Component
 public class OAuth2SuccessHandler implements AuthenticationSuccessHandler {
 
     private final JwtService jwtService;
+
+    // Where the React (Vite) frontend runs in development.
+    private static final String FRONTEND_URL = "http://localhost:5173";
 
     public OAuth2SuccessHandler(JwtService jwtService) {
         this.jwtService = jwtService;
@@ -31,12 +36,11 @@ public class OAuth2SuccessHandler implements AuthenticationSuccessHandler {
 
         String jwt = jwtService.generateToken(email);
 
-        response.setContentType("application/json");
+        String encodedToken = URLEncoder.encode(jwt, StandardCharsets.UTF_8);
 
-        response.getWriter().write("""
-                {
-                    "token":"%s"
-                }
-                """.formatted(jwt));
+        // Hand the token back to the SPA instead of printing it as raw
+        // JSON — LoginPage reads it from the URL and logs the user in
+        // automatically.
+        response.sendRedirect(FRONTEND_URL + "/login?token=" + encodedToken);
     }
 }
