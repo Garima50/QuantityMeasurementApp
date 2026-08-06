@@ -7,6 +7,10 @@
 # Maven
 # =========================
 target/
+eureka-server/target/
+auth-service/target/
+operation-service/target/
+api-gateway/target/
 
 # =========================
 # Build folders
@@ -65,3 +69,4 @@ quantity_measurement_repo.ser
 
 
 src/main/resources/application-local.properties
+application-local.properties

@@ -1,0 +1,34 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: api-gateway
+  cloud:
+    gateway:
+      server:
+        webmvc:
+          routes:
+            # The lb:// scheme means "resolve OPERATION-SERVICE through
+            # Eureka and load-balance across however many instances are
+            # registered" — this is the load-balancing piece of UC21.
+            - id: operation-service
+              uri: lb://OPERATION-SERVICE
+              predicates:
+                - Path=/api/quantity/**
+
+            # Not currently called by the frontend (the browser talks to
+            # auth-service directly for the OAuth2 redirect — see the
+            # README), but routed here too so any future JSON calls to
+            # auth-service go through the gateway like everything else.
+            - id: auth-service
+              uri: lb://AUTH-SERVICE
+              predicates:
+                - Path=/api/auth/**
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka
+  instance:
+    prefer-ip-address: true
